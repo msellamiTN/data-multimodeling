@@ -1,57 +1,57 @@
-# Advanced Business Intelligence & Data Warehousing — Harvard/Oxford Level Course
+# Programme de Modélisation Multidimensionnelle et Entrepôts de Données
 
-> **Course Code:** BI-401 | **Credits:** 4 | **Level:** Undergraduate (Year 2–3)  
-> **Primary Text:** Kimball & Ross, *The Data Warehouse Toolkit* (3rd ed.)  
-> **Academic Standard:** Harvard Business School / Oxford Saïd Business School Level
+> **Code UE : MMD S4** | **Crédits : 4** | **Niveau : Licence 2-3**  
+> **Référence principale : Kimball & Ross, *Entrepôts de données : guide pratique de modélisation dimensionnelle***  
+> **Volume horaire : 42h** | **Coefficient : 1.5**
 
-## Course Philosophy & Academic Excellence
+## Philosophie académique et excellence pédagogique
 
-This course represents the convergence of **theoretical rigor** and **practical implementation** at the highest academic standards. Students will develop **analytical thinking** and **technical mastery** through:
+Ce cours représente la convergence entre **rigueur théorique** et **mise en œuvre pratique** au plus haut niveau académique. Les étudiants développeront une **pensée analytique** et une **maîtrise technique** à travers :
 
-- **Mathematical Foundations:** Formal algebraic definitions of dimensional modeling and OLAP operations
-- **Enterprise Architecture:** Design patterns for scalable, maintainable analytical platforms
-- **Strategic Decision Making:** Transform data into competitive intelligence using established frameworks
-- **Research Integration:** Latest findings from IEEE Transactions, ACM Computing Surveys, and VLDB Proceedings
+- **Fondements mathématiques** : Définitions algébriques formelles de la modélisation dimensionnelle et des opérations OLAP
+- **Architecture d'entreprise** : Patterns de conception pour plateformes analytiques scalables et maintenables  
+- **Prise de décision stratégique** : Transformation des données en intelligence concurrentielle selon des cadres établis
+- **Intégration recherche** : Derniers avancées de IEEE Transactions, ACM Computing Surveys et VLDB Proceedings
 
-## Learning Outcomes (Bloom’s Taxonomy Levels 4-6)
+## Objectifs d'apprentissage (Taxonomie de Bloom, niveaux 4-6)
 
-Upon successful completion, students will be able to:
+À l'issue de ce cours, les étudiants seront capables de :
 
-1. **Analyze** complex trade-offs between OLTP and OLAP systems using quantitative metrics
-2. **Design** enterprise-grade dimensional models following Kimball’s methodology with formal justification
-3. **Implement** production-ready ETL pipelines addressing data quality and performance requirements
-4. **Evaluate** OLAP architectures (ROLAP/MOLAP/HOLAP) using cost-benefit analysis frameworks
-5. **Create** analytical solutions addressing real-world business problems with measurable impact
-6. **Critique** existing BI implementations using established academic and industry frameworks
+1. **Analyser** les arbitrages complexes entre systèmes OLTP et OLAP en utilisant des métriques quantitatives
+2. **Concevoir** des modèles dimensionnels de niveau entreprise selon la méthodologie Kimball avec justification formelle
+3. **Implémenter** des pipelines ETL prêts pour la production en adressant qualité et performance des données
+4. **Évaluer** les architectures OLAP (ROLAP/MOLAP/HOLAP) selon des cadres d'analyse coût-bénéfice
+5. **Créer** des solutions analytiques résolvant des problèmes métier réels avec impact mesurable
+6. **Critiquer** les implémentations BI existantes selon les cadres académiques et industriels établis
 
-## Course Structure & Academic Rigor
+## Structure académique et rigueur intellectuelle
 
-### Core Theoretical Foundations
+### Fondements théoriques fondamentaux
 
-- **Chapter A — Business Intelligence Fundamentals & Strategic Positioning**
-  - Information value chain analysis and competitive advantage theory
-  - Mathematical foundations of decision support systems evolution
-  - Enterprise BI architecture with formal architectural principles
+- **Chapitre A — Introduction à l'Informatique Décisionnelle (BI)**
+  - Analyse de la chaîne de valeur informationnelle et théorie de l'avantage concurrentiel
+  - Fondements mathématiques de l'évolution des systèmes d'aide à la décision
+  - Architecture BI d'entreprise avec principes architecturaux formels
 
-- **Chapter B — Advanced Data Warehouse Architecture & Implementation**
-  - Inmon vs Kimball paradigms with quantitative comparison
-  - Advanced ETL architecture with performance optimization strategies
-  - Real-time analytics patterns and microservices architecture
+- **Chapitre B — Entrepôts de Données : Concepts et Architecture**
+  - Paradigmes Inmon vs Kimball avec comparaison quantitative
+  - Architecture ETL avancée avec stratégies d'optimisation de performance
+  - Patterns d'analyse temps réel et architecture microservices
 
-- **Chapter C — Advanced Dimensional Modeling & Mathematical Frameworks**
-  - Dimensional modeling algebra and granularity theory
-  - Complex schema patterns (star, snowflake, constellation) with optimization
-  - Slowly changing dimensions with formal analysis of trade-offs
+- **Chapitre C — Modélisation Multidimensionnelle Avancée**
+  - Algèbre de modélisation dimensionnelle et théorie de la granularité
+  - Patterns de schémas complexes (étoile, flocon, constellation) avec optimisation
+  - Dimensions à variation lente avec analyse formelle des arbitrages
 
-- **Chapter D — OLAP Systems & Multidimensional Analysis**
-  - Mathematical formalization of OLAP operations (roll-up, drill-down, slice, dice, pivot)
-  - Advanced OLAP architectures with performance optimization
-  - Complex aggregation patterns and time series analysis
+- **Chapitre D — Systèmes OLAP et Analyse Multidimensionnelle**
+  - Formalisation mathématique des opérations OLAP (roll-up, drill-down, slice, dice, pivot)
+  - Architectures OLAP avancées avec optimisation de performance
+  - Patterns d'agrégation complexes et analyse des séries temporelles
 
-- **Chapter E — Implementation Strategies & Architecture Selection**
-  - Decision framework for OLAP architecture selection
-  - Cost-benefit analysis with quantitative metrics
-  - Implementation roadmap with enterprise best practices
+- **Chapitre E — Approches d'Implantation : ROLAP/MOLAP/HOLAP**
+  - Cadre de décision pour sélection d'architecture OLAP
+  - Analyse coût-bénéfice avec métriques quantitatives
+  - Feuille de route d'implémentation avec meilleures pratiques d'entreprise
 
 ### Advanced Practical Components
 
