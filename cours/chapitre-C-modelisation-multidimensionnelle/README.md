@@ -151,6 +151,7 @@ erDiagram
         sous_categorie_key int FK
         marque varchar
         prix_unitaire decimal
+        est_actif boolean
     }
     
     DIM_CATEGORIE {
