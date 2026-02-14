@@ -120,16 +120,39 @@ Une entreprise retail souhaite consolider les ventes en ligne et en magasin. L�
 **Mermaid**
 ```mermaid
 erDiagram
-  DIM_DATE ||--o{ FACT_VENTE : "date_id"
-  DIM_PRODUIT ||--o{ FACT_VENTE : "produit_id"
-  DIM_MAGASIN ||--o{ FACT_VENTE : "magasin_id"
-  FACT_VENTE {
-    date date_id
-    int produit_id
-    int magasin_id
-    float montant
-    int quantite
-  }
+    DIM_DATE ||--o{ FACT_VENTE
+    DIM_PRODUIT ||--o{ FACT_VENTE
+    DIM_MAGASIN ||--o{ FACT_VENTE
+    FACT_VENTE {
+        date date_id
+        int produit_id
+        int magasin_id
+        decimal montant_vente
+        int quantite
+    }
+    
+    DIM_DATE {
+        date date_id PK
+        string jour_semaine
+        int mois
+        int annee
+        boolean est_jour_ferie
+    }
+    
+    DIM_PRODUIT {
+        int produit_id PK
+        string nom_produit
+        string categorie
+        decimal prix_unitaire
+    }
+    
+    DIM_MAGASIN {
+        int magasin_id PK
+        string nom_magasin
+        string ville
+        string region
+        int surface
+    }
 ```
 
 **SVG pédagogique (représentation visuelle)**

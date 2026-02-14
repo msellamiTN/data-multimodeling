@@ -106,6 +106,34 @@ erDiagram
         est_label_prive boolean
         poids_kg decimal
     }
+    
+    DIM_MAGASIN {
+        magasin_key int PK
+        magasin_nom varchar
+        ville varchar
+        region varchar
+        pays varchar
+        surface_m2 int
+        date_ouverture date
+    }
+    
+    DIM_CLIENT {
+        client_key int PK
+        client_nom varchar
+        email varchar
+        segment_client varchar
+        date_inscription date
+        est_actif boolean
+    }
+    
+    DIM_PROMOTION {
+        promotion_key int PK
+        promotion_nom varchar
+        type_promotion varchar
+        remise_pct decimal
+        date_debut date
+        date_fin date
+    }
 ```
 
 #### 2.2 Schéma en flocon (Snowflake Schema)
