@@ -53,7 +53,7 @@ La Business Intelligence représente un **investissement stratégique majeur** p
 #### 1.2 Évolution historique de la BI
 
 | Période | Technologie principale | Utilisation typique | Innovation clé |
-|---------|----------------------|---------------------|----------------|
+| ------- | ---------------------- | ------------------- | -------------- |
 | **1960-1980** | Systèmes de reporting | Rapports automatisés | Automatisation |
 | **1980-1995** | Executive Information Systems | Tableaux de bord dirigeants | Vision consolidée |
 | **1995-2010** | Data Warehouses | Analyse multidimensionnelle | OLAP |
@@ -104,6 +104,7 @@ graph TB
 #### 2.2 Les différentes approches architecturales
 
 **Approche Centralisée (Inmon)** :
+
 - Data Warehouse central unique
 - Données normalisées (3NF)
 - Data Marts dérivés
@@ -111,6 +112,7 @@ graph TB
 - **Inconvénients** : Lent à mettre en place, complexe
 
 **Approche Décentralisée (Kimball)** :
+
 - Data Marts indépendants
 - Modélisation en étoile
 - Développement rapide
@@ -118,6 +120,7 @@ graph TB
 - **Inconvénients** : Redondance, gouvernance complexe
 
 **Approche Hybride Moderne** :
+
 - Data Lake + Data Warehouse
 - Flexibilité maximale
 - Technologies cloud
@@ -129,7 +132,7 @@ graph TB
 #### 3.1 Comprendre les deux approches
 
 | Caractéristique | OLTP (Opérationnel) | OLAP (Décisionnel) |
-|----------------|---------------------|-------------------|
+| ---------------- | ------------------- | ----------------- |
 | **Objectif principal** | Gérer les opérations quotidiennes | Analyser les tendances |
 | **Type de questions** | "Combien ce client a-t-il acheté ?" | "Quels produits se vendent le mieux ?" |
 | **Utilisateurs** | Caissiers, vendeurs, employés | Managers, analystes |
@@ -190,14 +193,14 @@ ORDER BY d.annee, d.mois, ca_total DESC;
 
 **Formule simple du ROI** :
 
-```
+```plaintext
 ROI BI = [(Bénéfices - Coûts) / Coûts] × 100
 ```
 
-**Étude de cas : Banque européenne**
+#### Étude de cas : Banque européenne
 
 | Investissement | Montant (€M) | Détails |
-|----------------|--------------|---------|
+| -------------- | -------------- | ------- |
 | Infrastructure cloud | 1.2 | Serveurs, stockage, réseau |
 | Plateforme BI | 0.8 | Logiciels, licences |
 | Formation | 0.9 | Employés, changement |
@@ -205,7 +208,8 @@ ROI BI = [(Bénéfices - Coûts) / Coûts] × 100
 | Gouvernance | 0.7 | Qualité, sécurité |
 | **Total** | **4.2** | **Sur 3 ans** |
 
-**Résultats obtenus** :
+#### Résultats obtenus
+
 - **ROI** : 187% sur 3 ans
 - **Économies** : €1.8M par an (-25% coûts)
 - **Revenus additionnels** : €2.3M par an (+15% ventes)
