@@ -20,43 +20,55 @@ Les travaux dirigés constituent le complément pratique indispensable au cours 
 ## Organisation des TD
 
 ### TD1 — Modèle en étoile (Semaine 2)
+
 **Niveau** : Débutant  
 **Volume** : 4h (2h encadré + 2h travail personnel)  
+
 **Objectifs spécifiques** :
+
 - Comprendre la structure d'un schéma en étoile
 - Identifier les tables de faits et de dimensions
 - Concevoir un modèle dimensionnel simple
 - Justifier les choix de modélisation
 
 **Compétences visées** :
+
 - Application des concepts de base
 - Analyse de données opérationnelles
 - Conception de schéma décisionnel
 
 ### TD2 — OLAP : Opérations (Semaine 3)
+
 **Niveau** : Intermédiaire  
 **Volume** : 4h (2h encadré + 2h travail personnel)  
+
 **Objectifs spécifiques** :
+
 - Maîtriser les opérations OLAP fondamentales
 - Comprendre la navigation multidimensionnelle
 - Interpréter les résultats d'analyses OLAP
 - Rédiger des requêtes analytiques complexes
 
 **Compétences visées** :
+
 - Navigation dans les cubes OLAP
 - Analyse multidimensionnelle
 - Interprétation de résultats
 
 ### TD3 — Choix d'architecture (Semaine 4)
+
 **Niveau** : Avancé  
 **Volume** : 8h (4h encadré + 4h travail personnel)  
+
 **Objectifs spécifiques** :
+
 - Analyser les critères de choix d'architecture
 - Comparer ROLAP, MOLAP et HOLAP
 - Évaluer les performances et coûts
 - Proposer une architecture optimisée
 
 **Compétences visées** :
+
 - Analyse comparative
 - Prise de décision technique
 - Justification argumentée
@@ -74,12 +86,14 @@ Les travaux dirigés constituent le complément pratique indispensable au cours 
 ### Livrables attendus
 
 **Pour chaque TD** :
+
 - Modélisation dimensionnelle (schéma Mermaid)
 - Justifications des choix de conception
 - Réponses aux questions théoriques
 - Code SQL ou requêtes OLAP si applicable
 
 **Format de soumission** :
+
 - Document Markdown avec schémas intégrés
 - Code commenté et justifié
 - Analyse critique personnelle
@@ -89,7 +103,7 @@ Les travaux dirigés constituent le complément pratique indispensable au cours 
 ### Barème de notation
 
 | Critère | Pondération | Évaluation |
-|----------|-------------|------------|
+| --- | --- | --- |
 | Compréhension du problème | 20% | Analyse correcte du besoin |
 | Qualité de la modélisation | 30% | Pertinence du schéma dimensionnel |
 | Justification des choix | 25% | Argumentation cohérente |
@@ -109,22 +123,26 @@ Les travaux dirigés constituent le complément pratique indispensable au cours 
 ### Documentation de référence
 
 **Kimball, R., & Ross, M.** (2003). *Entrepôts de données : guide pratique de modélisation dimensionnelle*.
+
 - Chapitre 3 : Modélisation dimensionnelle de base
 - Chapitre 4 : Techniques avancées de modélisation
 - Chapitre 8 : Architecture OLAP
 
 **Cuzzocrea, A., & Moussa, R.** (2016). *Multi-Dimensional Database Modeling and Querying*.
+
 - Section 4.1 : Patterns de modélisation
 - Section 5.3 : Techniques d'optimisation OLAP
 
 ### Outils et plateformes
 
 **Environnement de développement** :
+
 - MySQL Workbench pour la modélisation
 - DBeaver pour l'exécution de requêtes SQL
 - Draw.io pour les schémas complémentaires
 
 **Plateformes OLAP (démonstration)** :
+
 - Apache Kylin pour ROLAP
 - Apache Druid pour OLAP temps réel
 - Microsoft SSAS pour MOLAP
@@ -141,16 +159,19 @@ Les travaux dirigés constituent le complément pratique indispensable au cours 
 ### Questions de vérification
 
 **Avant TD1** :
+
 - Qu'est-ce qu'une table de faits ? Une table de dimensions ?
 - Quelle est la différence entre grain et granularité ?
 - Pourquoi utilise-t-on des clés substituées ?
 
 **Avant TD2** :
+
 - Définir roll-up, drill-down, slice, dice
 - Comment représente-t-on un cube OLAP ?
 - Quelle est la sémantique d'une hiérarchie ?
 
 **Avant TD3** :
+
 - Quels sont les critères de performance d'une architecture OLAP ?
 - Comment choisir entre ROLAP et MOLAP ?
 - Qu'est-ce que l'architecture HOLAP ?
@@ -158,15 +179,24 @@ Les travaux dirigés constituent le complément pratique indispensable au cours 
 ### Exercices de préparation
 
 **Exercice 1** : Analyser un schéma existant et identifier les faits/dimensions
+
 **Exercice 2** : Proposer une hiérarchie pour une dimension temps
+
 **Exercice 3** : Comparer deux architectures OLAP sur un cas simple
+
+### Banque de questions-types (réutilisables dans les TD)
+
+- **Schéma en étoile (eShopPlus)** : Identifier la table de faits ventes (mesures : montant, quantité) et détailler 4 dimensions (produit, client, temps, région). Dessiner le schéma en étoile.
+- **Schéma en flocon (logistique)** : Normaliser les dimensions localisation (entrepôt → ville → région → pays) et montrer la table de faits livraisons (mesures : coût, poids). Expliquer l’intérêt (réduction de redondance, plus de jointures).
+- **Schéma en galaxie (ventes + retours)** : Deux faits (ventes, retours) partageant produit, client, temps ; dimensions spécifiques (canal de vente, motif de retour). Représenter la constellation.
+- **Étude de cas université** : Proposer faits (inscriptions, résultats) et dimensions (étudiant, cours, enseignant, temps), choisir étoile/flocon/galaxie et argumenter. Dessiner le schéma retenu.
 
 ---
 
 ## Calendrier et planning
 
 | Semaine | TD | Thème principal | Évaluation |
-|---------|----|----------------|------------|
+| --- | --- | --- | --- |
 | 2 | TD1 | Modèle en étoile | Notation individuelle |
 | 3 | TD2 | Opérations OLAP | Notation individuelle |
 | 4 | TD3 | Architecture OLAP | Notation individuelle + synthèse |
