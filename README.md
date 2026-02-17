@@ -29,7 +29,7 @@ Ce dépôt contient l'intégralité des ressources pédagogiques pour le cours d
 
 Le cours inclut un mini-projet de conception complète d'un système décisionnel.
 
-- **[📋 Énoncé du Mini-Projet](mini-projet/enonce.md)** : Cahier des charges et livrables attendus.
+- **[📋 Énoncé du Mini-Projet](mini-projet/README.md)** : Cahier des charges et livrables attendus.
 - **[⚖️ Grille d'Évaluation](mini-projet/evaluation.md)** : Critères de notation.
 
 ---
