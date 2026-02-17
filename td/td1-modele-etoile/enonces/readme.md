@@ -58,15 +58,33 @@
 
 ```mermaid
 erDiagram
-  DIM_DATE ||--o{ FACT_VENTE : "date_id"
-  DIM_PRODUIT ||--o{ FACT_VENTE : "produit_id"
-  DIM_MAGASIN ||--o{ FACT_VENTE : "magasin_id"
+  DIM_DATE ||--o{ FACT_VENTE : date_id
+  DIM_PRODUIT ||--o{ FACT_VENTE : produit_id
+  DIM_MAGASIN ||--o{ FACT_VENTE : magasin_id
+
+  DIM_DATE {
+    date_id PK
+    date_cal DATE
+    annee INT
+    mois INT
+  }
+  DIM_PRODUIT {
+    produit_id PK
+    produit_nom
+    categorie
+  }
+  DIM_MAGASIN {
+    magasin_id PK
+    ville
+    region
+  }
   FACT_VENTE {
-    date date_id
-    string produit_id
-    string magasin_id
-    float montant
-    int quantite
+    fact_id PK
+    date_id FK
+    produit_id FK
+    magasin_id FK
+    montant
+    quantite
   }
 ```
 

@@ -72,16 +72,37 @@ INSERT INTO fact_ventes (date_id, produit_sk, magasin_sk, montant, quantite) VAL
 
 ```mermaid
 erDiagram
-  DIM_DATE ||--o{ FACT_VENTE : "date_id"
-  DIM_PRODUIT ||--o{ FACT_VENTE : "produit_sk"
-  DIM_MAGASIN ||--o{ FACT_VENTE : "magasin_sk"
+  DIM_DATE ||--o{ FACT_VENTE : date_id
+  DIM_PRODUIT ||--o{ FACT_VENTE : produit_sk
+  DIM_MAGASIN ||--o{ FACT_VENTE : magasin_sk
+
+  DIM_DATE {
+    date_id PK
+    date_cal DATE
+    annee INT
+    mois INT
+    jour INT
+    trimestre INT
+  }
+  DIM_PRODUIT {
+    produit_sk PK
+    produit_id UNIQUE
+    produit_nom
+    categorie
+  }
+  DIM_MAGASIN {
+    magasin_sk PK
+    magasin_id UNIQUE
+    ville
+    region
+  }
   FACT_VENTE {
-    int fact_sk
-    int date_id
-    int produit_sk
-    int magasin_sk
-    decimal montant
-    int quantite
+    fact_sk PK
+    date_id FK
+    produit_sk FK
+    magasin_sk FK
+    montant
+    quantite
   }
 ```
 
