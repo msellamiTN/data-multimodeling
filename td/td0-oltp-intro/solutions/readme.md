@@ -6,18 +6,41 @@
 - **Limites** : Pas d'analyses multi-dimensionnelles (ex. : évolution CA par catégorie/mois).
 - **Performance** : Normalisée ⇒ jointures coûteuses pour agrégations.
 
-## Schéma OLTP (exemple simple)
+## Schéma OLTP (exemple simple, coloré)
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor': '#e3f2fd', 'primaryBorderColor': '#1565c0', 'secondaryColor': '#fff3e0', 'secondaryBorderColor': '#ef6c00'}}}%%
 erDiagram
+  classDef dim fill:#E3F2FD,stroke:#1565C0,stroke-width:1.5px;
+  classDef fact fill:#FFF3E0,stroke:#EF6C00,stroke-width:1.5px;
+
   PRODUIT ||--o{ VENTE : "produit_id"
   MAGASIN ||--o{ VENTE : "magasin_id"
-  VENTE {
+  CLIENT ||--o{ VENTE : "client_id"
+
+  PRODUIT:::dim {
+    produit_id PK
+    produit_nom
+    categorie
+  }
+  MAGASIN:::dim {
+    magasin_id PK
+    ville
+    region
+  }
+  CLIENT:::dim {
+    client_id PK
+    nom
+    segment
+  }
+  VENTE:::fact {
     vente_id PK
     produit_id FK
     magasin_id FK
+    client_id FK
     quantite
     montant
+    date_vente
   }
 ```
 
