@@ -32,7 +32,61 @@
    Expliquer pourquoi ces requêtes dégradent l’OLTP (verrous, scans, index inadaptés, absence d’historisation).
 4. **Diagnostic** : lister 4 limites de l’OLTP pour l’analytique (performance, schéma normalisé, absence d’historique, charge transactionnelle).
 5. **Cible DWH/OLAP** : proposer en 5 bullets ce que change un DWH (schéma en étoile, historisation, agrégations, séparation des charges, gouvernance) et dessiner un schéma Mermaid simple : sources OLTP → staging → DWH (étoile ventes) → BI/OLAP.
-6. **Plan minimal de passage** : étapes clés (extract, nettoyer, conformer dimensions, charger facts, publier vues/OLAP).
+
+## Exemples SQL OLTP (scénarios concrets)
+
+- **Statut de commande** (opérationnel) :
+
+  ```sql
+  SELECT statut
+  FROM commandes
+  WHERE commande_id = 101;
+  ```
+
+- **Stock par produit** (jointure stock + produits) :
+
+  ```sql
+  SELECT p.produit_id, p.nom, s.quantite_dispo
+  FROM stock s
+  JOIN produits p ON p.produit_id = s.produit_id
+  WHERE p.produit_id = 'P10';
+  ```
+
+- **Total d’une commande** (somme lignes) :
+
+  ```sql
+  SELECT c.commande_id,
+         SUM(lc.quantite * lc.prix_unitaire) AS total_ht
+  FROM commandes c
+  JOIN lignes_commande lc ON lc.commande_id = c.commande_id
+  WHERE c.commande_id = 101
+  GROUP BY c.commande_id;
+  ```
+
+- **Requête analytique problématique (3 jointures + agrégat)** :
+
+  ```sql
+  SELECT strftime('%Y-%m', c.date_commande) AS mois,
+         p.categorie,
+         cl.ville,
+         SUM(lc.quantite * lc.prix_unitaire) AS ca
+  FROM commandes c
+  JOIN lignes_commande lc ON lc.commande_id = c.commande_id
+  JOIN produits p ON p.produit_id = lc.produit_id
+  JOIN clients cl ON cl.client_id = c.client_id
+  GROUP BY strftime('%Y-%m', c.date_commande), p.categorie, cl.ville
+  ORDER BY mois, ca DESC;
+  ```
+
+  > À reproduire puis comparer avec la version matérialisée `fact_ventes` (voir notebook) pour mettre en évidence la différence OLTP vs pré-OLAP.
+
+## Mini-cas à rejouer (aligné avec le notebook)
+
+1. **Requête OLTP complexe** : écrire et commenter la requête CA mensuel par catégorie/ville sur les tables `commandes`, `lignes_commande`, `produits`, `clients` (3 jointures + agrégation).
+2. **Matérialisation (pré-OLAP)** : dériver une table de faits `fact_ventes(mois, categorie, ville, montant)` et montrer la même requête avec un `GROUP BY` direct.
+3. **Comparer** : lister en 3 bullets pourquoi la version matérialisée est plus adaptée à l’analytique (moins de jointures, index ciblés, séparation charge).
+4. **Optionnel** : exécuter la démo SQLite du notebook et coller les résultats pour illustrer la différence.
+5. **Plan minimal de passage** : étapes clés (extract, nettoyer, conformer dimensions, charger facts, publier vues/OLAP).
 
 ## Déroulé (1h30)
 

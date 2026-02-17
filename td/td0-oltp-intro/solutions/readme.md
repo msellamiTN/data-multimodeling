@@ -27,6 +27,15 @@ erDiagram
 - **OLAP** : Cube multi-dimensions pour slice/dice/roll-up.
 - **Transition** : ETL pour charger depuis OLTP vers DWH.
 
+### Exemples SQL OLTP (référence)
+
+- Statut de commande : `SELECT statut FROM commandes WHERE commande_id = 101;`
+- Stock par produit : `SELECT p.produit_id, p.nom, s.quantite_dispo FROM stock s JOIN produits p ON p.produit_id = s.produit_id WHERE p.produit_id = 'P10';`
+- Total d’une commande : `SELECT c.commande_id, SUM(lc.quantite * lc.prix_unitaire) AS total_ht FROM commandes c JOIN lignes_commande lc ON lc.commande_id = c.commande_id WHERE c.commande_id = 101 GROUP BY c.commande_id;`
+- Analytique coûteuse en OLTP (3 jointures + agrégat) : CA mensuel par catégorie/ville sur `commandes`, `lignes_commande`, `produits`, `clients`.
+
+> Voir le notebook TD0 : il reproduit cette requête puis la compare à une version matérialisée `fact_ventes` (pré-OLAP) pour montrer la réduction des jointures et l’intérêt de séparer OLTP/OLAP.
+
 ## Plan de passage (3 étapes)
 
 1. **Audit OLTP** : Identifier sources, grain, volumétrie.
