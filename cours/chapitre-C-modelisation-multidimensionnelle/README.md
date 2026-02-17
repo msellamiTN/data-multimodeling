@@ -350,14 +350,29 @@ CREATE TABLE fact_ventes_journalieres (
     taxe_totale DECIMAL(12,2),
     PRIMARY KEY (date_key, produit_key, magasin_key)
 );
-```
 
-### 5. Slowly Changing Dimensions (SCD)
+#### 4.3.0 Gestion des Dimensions Multi-valuées (Tables de Pont)
 
-#### 5.1 Types de SCD
+Lorsqu'un fait est lié à plusieurs valeurs d'une dimension (relation Many-to-Many), une **Table de Pont (Bridge Table)** est requise.
+*Exemple : Un diagnostic patient (Fait) peut impliquer plusieurs médecins (Dimension).*
 
-| Type | Description | Cas d'usage | Impact stockage |
-|------|-------------|-------------|-----------------|
+```mermaid
+erDiagram
+    FACT_DIAGNOSIS }|--|| BRIDGE_DOCTOR_GROUP : "group_id"
+    BRIDGE_DOCTOR_GROUP }|--|| DIM_DOCTOR : "doctor_id"
+    FACT_DIAGNOSIS {
+        int diagnosis_id
+        int group_id FK
+    }
+    BRIDGE_DOCTOR_GROUP {
+        int group_id FK
+        int doctor_id FK
+        float weight_factor
+    }
+    DIM_DOCTOR {
+        int doctor_id PK
+        string name
+    }
 | **SCD Type 1** | Écrasement des anciennes valeurs | Données de référence courantes | Minimal |
 | **SCD Type 2** | Conservation historique complète | Analyse d'évolution | 3-5x augmentation |
 | **SCD Type 3** | Valeur actuelle + précédente limitée | Audit léger | 2x augmentation |

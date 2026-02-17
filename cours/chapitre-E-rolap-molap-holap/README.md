@@ -32,7 +32,7 @@ Ce chapitre final constitue le sommet technique du cours en établissant les fon
 #### 1.2 Matrice de décision architecturale
 
 | Critère | ROLAP | MOLAP | HOLAP |
-|---------|-------|-------|-------|
+| :--- | :--- | :--- | :--- |
 | **Performance** | Variable | Excellente | Très bonne |
 | **Scalabilité** | Excellente | Limitée | Bonne |
 | **Flexibilité** | Maximale | Moyenne | Bonne |
@@ -41,6 +41,18 @@ Ce chapitre final constitue le sommet technique du cours en établissant les fon
 | **Maintenance** | Simple | Complexe | Très complexe |
 
 ### 2. Architecture ROLAP
+
+#### 2.0 Modern Data Stack & Cloud Data Warehousing
+
+Le paradigme ETL traditionnel évolue vers l'**ELT (Extract-Load-Transform)** à l'ère du cloud computing.
+
+| Caractéristique | Entrepôt Traditionnel (On-Premise) | Modern Data Stack (Cloud) |
+|-----------------|-----------------------------------|---------------------------|
+| **Architecture** | SMP (Symmetric Multi-Processing) | MPP (Massively Parallel Processing) |
+| **Mise à l'échelle** | Verticale (Scale-up) | Horizontale (Scale-out) |
+| **Stockage/Calcul** | Couplés | Découplés (Optimisation des coûts) |
+| **Paradigme** | ETL (Transform before Load) | ELT (Load raw, Transform in DB) |
+| **Exemples** | Oracle Exadata, Teradata | Snowflake, Google BigQuery, Databricks |
 
 #### 2.1 Principes fondamentaux
 

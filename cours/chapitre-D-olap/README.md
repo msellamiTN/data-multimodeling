@@ -30,7 +30,7 @@ Ce chapitre constitue le pont théorique et pratique entre la modélisation dime
 **Les 12 règles de Codd pour OLAP** :
 
 | Règle | Description | Implémentation |
-|-------|-------------|-----------------|
+| :--- | :--- | :--- |
 | **Règle 1** | Vue multidimensionnelle | Cubes avec hiérarchies |
 | **Règle 2** | Transparence | Accès transparent aux données |
 | **Règle 3** | Accessibilité | Navigation intuitive |
@@ -43,6 +43,16 @@ Ce chapitre constitue le pont théorique et pratique entre la modélisation dime
 | **Règle 10** | Intuitivité | Interface utilisateur simple |
 | **Règle 11** | Flexibilité | Adaptation aux besoins |
 | **Règle 12** | Uniformité | Cohérence des opérations |
+
+#### 1.1.2 Formalisation des Opérations OLAP
+
+| Opération | Définition Mathématique | Exemple |
+|-----------|-------------------------|---------|
+| **Roll-up** | f: D → D' où \|D'\| < \|D\| | Jour → Mois |
+| **Drill-down** | f: D → D' où \|D'\| > \|D\| | Mois → Jour |
+| **Slice** | C[dᵢ = v] | Ventes[Région = 'Nord'] |
+| **Dice** | C[d₁ ∈ V₁ ∧ ... ∧ dₙ ∈ Vₙ] | Ventes[Région ∈ {'Nord','Sud'} ∧ Mois ∈ {1,2}] |
+| **Pivot** | Permutation des dimensions | Produits × Magasins → Magasins × Produits |
 
 #### 1.2 Paradigme OLAP vs OLTP
 

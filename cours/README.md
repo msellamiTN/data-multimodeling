@@ -53,84 +53,106 @@ Ce cours représente la convergence entre **rigueur théorique** et **mise en œ
   - Analyse coût-bénéfice avec métriques quantitatives
   - Feuille de route d'implémentation avec meilleures pratiques d'entreprise
 
-### Advanced Practical Components
+### Composants Pratiques Avancés
 
-- **Progressive TDs:** Complex case studies (retail chains, financial services, healthcare)
-- **Enterprise Mini-Project:** Multi-national corporation analytics platform (10M daily transactions)
-- **Comprehensive Solutions:** Methodologies, optimization techniques, quality assurance frameworks
-- **Final Examination:** Theoretical questions, practical implementation, case study analysis
+- **TD Progressifs :** Études de cas complexes (chaînes de vente au détail, services financiers, santé)
+- **Mini-Projet d'Entreprise :** Plateforme analytique pour une multinationale (10M de transactions quotidiennes)
+- **Solutions Complètes :** Méthodologies, techniques d'optimisation, cadres d'assurance qualité
+- **Examen Final :** Questions théoriques, mise en œuvre pratique, analyse d'étude de cas
 
-## Academic Resources & References
+## Ressources Académiques & Références
 
-### Primary Academic Sources
-- **Textbooks:** Kimball & Ross (Chapters 1-10), Inmon (Chapters 3-7)
-- **Academic Papers:** IEEE Transactions, ACM Computing Surveys, VLDB Proceedings
-- **Industry Standards:** TDWI Best Practices, Gartner Magic Quadrant
-- **Research Integration:** MIT Technology Review, Harvard Business Review analytics
+### Sources Académiques Principales
+- **Manuels :** Kimball & Ross (Chapitres 1-10), Inmon (Chapitres 3-7)
+- **Articles de Recherche :** IEEE Transactions, ACM Computing Surveys, VLDB Proceedings
+- **Standards Industriels :** TDWI Best Practices, Gartner Magic Quadrant
+- **Intégration Recherche :** MIT Technology Review, Harvard Business Review analytics
 
-### Advanced Learning Materials
-- **Mathematical Frameworks:** Formal definitions, algebraic representations
-- **Enterprise Case Studies:** Real-world implementations with performance metrics
-- **Implementation Patterns:** Microservices, real-time analytics, cloud architecture
-- **Quality Frameworks:** Data governance, security, regulatory compliance
+### Matériel Pédagogique Avancé
+- **Cadres Mathématiques :** Définitions formelles, représentations algébriques
+- **Études de Cas d'Entreprise :** Implémentations réelles avec métriques de performance
+- **Patterns d'Implémentation :** Microservices, analytique temps réel, architecture cloud
+- **Cadres de Qualité :** Gouvernance des données, sécurité, conformité réglementaire
 
-## Assessment & Evaluation Criteria
+## Critères d'Évaluation
 
-### Academic Rigor Standards
-- **Theoretical Understanding:** 30% (formal definitions, mathematical frameworks)
-- **Practical Implementation:** 25% (code quality, architecture design)
-- **Analytical Thinking:** 25% (problem-solving, optimization strategies)
-- **Research Integration:** 15% (academic sources, industry best practices)
-- **Communication:** 10% (documentation, presentation, explanation)
+### Standards de Rigueur Académique
+- **Compréhension Théorique :** 30% (définitions formelles, cadres mathématiques)
+- **Mise en Œuvre Pratique :** 25% (qualité du code, conception architecturale)
+- **Pensée Analytique :** 25% (résolution de problèmes, stratégies d'optimisation)
+- **Intégration de la Recherche :** 15% (sources académiques, meilleures pratiques industrielles)
+- **Communication :** 10% (documentation, présentation, explication)
 
-### Excellence Benchmarks
-- **A+ (90-100%):** Publication-quality work with novel contributions
-- **A (85-89%):** Exceptional understanding with enterprise-ready solutions
-- **A- (80-84%):** Strong mastery with comprehensive implementation
-- **B+ (75-79%):** Good understanding with solid practical skills
+### Barème d'Excellence
+- **A+ (90-100%) :** Travail de qualité publication avec contributions novatrices
+- **A (85-89%) :** Compréhension exceptionnelle avec solutions prêtes pour l'entreprise
+- **A- (80-84%) :** Maîtrise solide avec mise en œuvre complète
+- **B+ (75-79%) :** Bonne compréhension avec compétences pratiques solides
 
-## Course Materials & Files
+## Matériel et Fichiers du Cours
 
-### Primary Documents
-- **`poly-harvard.md`** — Complete course support document (Harvard/Oxford level)
-- **`poly.md`** — Standard course support document (L3 level)
-- **`support.md`** — Condensed slides version for quick reference
+### Contenu Principal (Structure Modulaire)
+Le cours est structuré en chapitres autonomes, chacun disposant de sa propre documentation complète.
 
-### Chapter Structure
-- **`chapitre-A-bi-intro/`** — Business Intelligence fundamentals
-- **`chapitre-B-entrepots-architecture/`** — Data warehouse architecture
-- **`chapitre-C-modelisation-multidimensionnelle/`** — Dimensional modeling
-- **`chapitre-D-olap/`** — OLAP operations and analysis
-- **`chapitre-E-rolap-molap-holap/`** — Implementation approaches
+- **`chapitre-A-bi-intro/`** — **Introduction et Fondamentaux**
+  - Business Intelligence vs Systèmes Transactionnels
+  - Valeur Économique de l'Information
+  - Positionnement Stratégique
+  - *Pratique associée :* [TD0 - Introduction & Rappels](../td/td0-oltp-intro/)
 
-### Practical Components
-- **`../td/`** — Progressive exercises with enterprise case studies
-- **`../mini-projet/`** — Comprehensive analytics platform project
-- **`../docs/`** — Academic references and supplementary materials
+- **`chapitre-B-entrepots-architecture/`** — **Architecture des Entrepôts de Données**
+  - Paradigmes Inmon vs Kimball
+  - Architectures ETL/ELT
+  - Gouvernance et Qualité des Données
+  - *Pratique associée :* [TD3 - Choix d'Architecture](../td/td3-choix-architecture/)
 
-## Academic Standards & Expectations
+- **`chapitre-C-modelisation-multidimensionnelle/`** — **Modélisation Multidimensionnelle**
+  - Schémas en Étoile et en Flocon
+  - Techniques Avancées : Tables de Pont (Many-to-Many), SCD
+  - Granularité et Hiérarchies
+  - *Pratique associée :* [TD1 - Modélisation en Étoile](../td/td1-modele-etoile/)
 
-### Code of Academic Integrity
-- **Original Work:** All submissions must be original with proper attribution
-- **Research Standards:** Academic sources must be properly cited using established formats
-- **Collaboration:** Group work requires individual contribution documentation
-- **Professional Standards:** Enterprise-ready quality and documentation
+- **`chapitre-D-olap/`** — **Systèmes OLAP**
+  - Algèbre et Opérations OLAP Formelles (Slice, Dice, Drill-down)
+  - Conception et Optimisation de Cubes
+  - Performance MOLAP vs ROLAP
+  - *Pratique associée :* [TD2 - Opérations OLAP](../td/td2-olap-operations/)
 
-### Technical Requirements
-- **Documentation:** Comprehensive with architectural diagrams and performance metrics
-- **Code Quality:** Production-ready with testing frameworks and error handling
-- **Performance:** Optimized solutions with benchmarking and analysis
-- **Security:** Enterprise-grade security and data privacy compliance
+- **`chapitre-E-rolap-molap-holap/`** — **Stratégies d'Implémentation**
+  - Modern Data Stack (Cloud DW, ELT)
+  - Cadres de Décision ROLAP/MOLAP/HOLAP
+  - Optimisation des Performances et Conception Physique
+  - *Pratique associée :* [TD3 - Choix d'Architecture](../td/td3-choix-architecture/)
 
-## Office Hours & Academic Support
+### Composants Pratiques
+- **`../td/`** — Exercices progressifs avec études de cas d'entreprise
+- **`../mini-projet/`** — Projet complet de plateforme analytique
+- **`../docs/`** — Références académiques et matériel supplémentaire
+- **`demo_avancee.ipynb`** — Notebook SQL pratique pour concepts avancés (Tables de Pont, Fonctions de Fenêtrage)
 
-- **Professor Consultation:** Monday/Wednesday 2-4 PM (by appointment)
-- **Teaching Assistant:** Daily office hours for technical support
-- **Peer Learning:** Study groups and collaborative problem-solving sessions
-- **Industry Connections:** Guest lectures from BI industry leaders
+## Standards Académiques et Attentes
+
+### Code d'Intégrité Académique
+- **Travail Original :** Toutes les soumissions doivent être originales avec attribution appropriée
+- **Standards de Recherche :** Les sources académiques doivent être correctement citées
+- **Collaboration :** Le travail de groupe nécessite une documentation des contributions individuelles
+- **Standards Professionnels :** Qualité et documentation de niveau entreprise
+
+### Exigences Techniques
+- **Documentation :** Complète avec diagrammes d'architecture et métriques de performance
+- **Qualité du Code :** Prêt pour la production avec frameworks de test et gestion d'erreurs
+- **Performance :** Solutions optimisées avec benchmarking et analyse
+- **Sécurité :** Sécurité de niveau entreprise et conformité à la confidentialité des données
+
+## Support Académique
+
+- **Consultation Professeur :** Lundi/Mercredi 14h-16h (sur rendez-vous)
+- **Chargé de TD :** Heures de permanence pour le support technique
+- **Apprentissage par les Pairs :** Groupes d'étude et sessions de résolution de problèmes
+- **Liens Industrie :** Conférences invitées de leaders de l'industrie BI
 
 ---
 
-**Course Excellence Guarantee:** This course meets the academic standards of top-tier business schools and prepares students for leadership roles in data engineering, analytics architecture, and strategic decision-making.
+**Garantie d'Excellence du Cours :** Ce cours répond aux standards académiques des meilleures écoles de commerce et prépare les étudiants à des rôles de leadership en ingénierie des données, architecture analytique et prise de décision stratégique.
 
-*This syllabus incorporates the latest research findings and industry best practices to ensure students receive cutting-edge education in Business Intelligence and Data Warehousing.*
+*Ce syllabus intègre les derniers résultats de recherche et les meilleures pratiques de l'industrie pour assurer aux étudiants une éducation de pointe en Business Intelligence et Entrepôts de Données.*
