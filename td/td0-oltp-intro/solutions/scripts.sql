@@ -1,0 +1,3 @@
+-- TD0 Scripts SQL (pas de SQL requis, concepts théoriques)
+-- Placeholder : Aucun script SQL pour TD0 (introduction OLTP/DWH)
+-- Utilisez le notebook pour simulations conceptuelles si besoin.

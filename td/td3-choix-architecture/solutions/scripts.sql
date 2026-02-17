@@ -1,0 +1,3 @@
+-- TD3 Scripts SQL (pas de SQL requis, architecture conceptuelle)
+-- Placeholder : Aucun script SQL pour TD3 (choix architecture)
+-- Utilisez le notebook pour simulations décisionnelles si besoin.

@@ -4,13 +4,17 @@
 
 - Choisir une architecture OLAP adaptée à un contexte métier et à des contraintes (volume, réactivité, coût).
 - Argumenter et proposer un plan d’actualisation.
+- Formaliser un SLA simple (latence requêtes, fenêtre d’actualisation).
 
 ## Contexte
 
 Entreprise retail avec :
+
 - Historique 5 ans de transactions (fort volume, peu requêté).
 - Tableau de bord quotidien sur les 60 derniers jours (fortement consulté).
 - Budget limité pour le stockage MOLAP massif.
+- Volumétrie indicative : 50M lignes fact_ventes/an ; 500 magasins ; 5 000 produits.
+- SLA cible : requêtes tableau de bord < 5s ; ad hoc < 20s ; rafraîchissement agrégés quotidiens < 2h.
 
 ## Travail demandé
 
@@ -18,6 +22,7 @@ Entreprise retail avec :
 2. Proposer un plan d’actualisation (fréquence des agrégés/cubes, latence acceptée).
 3. Schématiser le flux (Mermaid) : sources → stockage détaillé → agrégés → BI.
 4. Lister 3 risques (coût, cohérence des agrégés, performance) et les parades.
+5. Définir un mini-SLA : temps de réponse attendu par type de requête et fenêtre de rafraîchissement.
 
 ## Attendus (correction synthétique)
 
@@ -35,6 +40,18 @@ flowchart TD
 ```
 
 - Risques : stockage MOLAP explosif (limiter plage), décalage d’actualisation (planifier/monitorer), incohérence (process ETL + rebuild cube).
+
+## Grille d’aide au choix (mémo)
+
+- **ROLAP** : + détaillé, + flexible, - rapide ; coût stockage moindre ; convient à requêtes ad hoc/historique.
+- **MOLAP** : + rapide sur agrégés, - volumétrie ; coût stockage élevé ; idéal tableaux de bord récents.
+- **HOLAP** : mix : détaillé en ROLAP, agrégés récents en MOLAP ; bon compromis coût/latence.
+
+## Livrables
+
+- Note synthétique (1 page) : choix, justification, SLA.
+- Schéma Mermaid du flux.
+- Tableau comparatif ROLAP/MOLAP/HOLAP pour ce cas (latence, coût, gouvernance).
 
 ## Pour aller plus loin
 
