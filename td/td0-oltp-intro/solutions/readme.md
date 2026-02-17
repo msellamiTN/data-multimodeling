@@ -16,28 +16,28 @@ erDiagram
   CLIENT  ||--o{ VENTE : client_id
 
   PRODUIT {
-    produit_id PK
-    produit_nom
-    categorie
+    produit_id INT PK
+    produit_nom STRING
+    categorie STRING
   }
   MAGASIN {
-    magasin_id PK
-    ville
-    region
+    magasin_id INT PK
+    ville STRING
+    region STRING
   }
   CLIENT {
-    client_id PK
-    nom
-    segment
+    client_id INT PK
+    nom STRING
+    segment STRING
   }
   VENTE {
-    vente_id PK
-    produit_id FK
-    magasin_id FK
-    client_id FK
-    quantite
-    montant
-    date_vente
+    vente_id INT PK
+    produit_id INT FK
+    magasin_id INT FK
+    client_id INT FK
+    quantite INT
+    montant DECIMAL
+    date_vente DATE
   }
 ```
 
