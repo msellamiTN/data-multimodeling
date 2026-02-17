@@ -11,24 +11,25 @@ Retail (magasins + e-commerce) : ventes, catalogue produits, clients, magasins, 
 
 ## Livrables attendus
 
-1) **Schéma** :
-- Diagramme Mermaid ER (étoile ou étoile + flocon limité).
-- Tables : dimensions (date, produit, client, magasin, canal), fact ventes (granularité ligne de transaction).
+1. **Schéma** :
+   - Diagramme Mermaid ER (étoile ou étoile + flocon limité).
+   - Tables : dimensions (date, produit, client, magasin, canal), fact ventes.
+   - **Avancé** : Inclure une dimension à variation lente (SCD Type 2) OU une relation Many-to-Many (Bridge Table) pour gérer des promotions multiples par vente.
 
-2) **Scripts SQL** :
-- Création des tables dims/fact.
-- Exemples d’inserts (jeu d’essai minimal ~20 lignes fact, dims cohérentes).
+2. **Scripts SQL** :
+   - Création des tables dims/fact.
+   - Exemples d’inserts (jeu d’essai minimal ~20 lignes fact, dims cohérentes).
 
-3) **Requêtes OLAP** :
-- CA mensuel par catégorie et par magasin (roll-up jour→mois).
-- Top 5 produits par mois (fenêtres ou agrégations + filtre).
-- Slice/dice (magasin, période) avec résultats attendus sur le jeu d’essai.
+3. **Requêtes OLAP** :
+   - CA mensuel par catégorie et par magasin (roll-up jour→mois).
+   - Top 5 produits par mois (fenêtres ou agrégations + filtre).
+   - Slice/dice (magasin, période) avec résultats attendus sur le jeu d’essai.
 
-4) **Qualité/Gouvernance** :
-- 5 règles de contrôle (doublons, dates invalides, FK manquantes, montants négatifs injustifiés, densité des dimensions).
+4. **Qualité/Gouvernance** :
+   - 5 règles de contrôle (doublons, dates invalides, FK manquantes, montants négatifs injustifiés, densité des dimensions).
 
-5) **Courte note** (10 lignes max) :
-- Choix d’architecture (ROLAP/MOLAP/HOLAP) et plan d’actualisation.
+5. **Courte note** (10 lignes max) :
+   - Choix d’architecture (ROLAP/MOLAP/HOLAP) et plan d’actualisation.
 
 ## Barème (exemple)
 

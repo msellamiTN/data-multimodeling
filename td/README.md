@@ -128,6 +128,13 @@ Les travaux dirigés constituent le complément pratique indispensable au cours 
 - Chapitre 4 : Techniques avancées de modélisation
 - Chapitre 8 : Architecture OLAP
 
+### Curriculum Avancé (Modern Data Stack)
+
+Pour aller plus loin (niveau M1/Ingénieur), les TD intègrent désormais des notions de :
+- **Modern Data Stack** : ELT vs ETL, Cloud Data Warehousing (Snowflake, BigQuery).
+- **Modélisation Complexe** : Bridge Tables (Many-to-Many), SCD Type 2/3.
+- **Qualité des Données** : Frameworks de validation automatisée.
+
 **Cuzzocrea, A., & Moussa, R.** (2016). *Multi-Dimensional Database Modeling and Querying*.
 
 - Section 4.1 : Patterns de modélisation

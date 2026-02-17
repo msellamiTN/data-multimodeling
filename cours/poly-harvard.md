@@ -279,6 +279,32 @@ erDiagram
 
 ### 4.3 Advanced Dimensional Techniques
 
+#### 4.3.0 Handling Multi-Valued Dimensions (Bridge Tables)
+
+When a fact relates to multiple values of a dimension (Many-to-Many), a **Bridge Table** is required.
+*Example: A patient diagnosis (Fact) can have multiple doctors (Dimension).*
+
+```mermaid
+erDiagram
+    FACT_DIAGNOSIS }|--|| BRIDGE_DOCTOR_GROUP : "group_id"
+    BRIDGE_DOCTOR_GROUP }|--|| DIM_DOCTOR : "doctor_id"
+    FACT_DIAGNOSIS {
+        int diagnosis_id
+        int group_id FK
+    }
+    BRIDGE_DOCTOR_GROUP {
+        int group_id FK
+        int doctor_id FK
+        float weight_factor
+    }
+    DIM_DOCTOR {
+        int doctor_id PK
+        string name
+    }
+```
+
+**Impact:** Bridge tables can explode row counts. Use with caution or consider "primary doctor" logic if applicable.
+
 #### 4.3.1 Slowly Changing Dimensions (SCD) Analysis
 
 | SCD Type | Use Case | Storage Impact | Query Complexity |
@@ -364,14 +390,26 @@ Where Dᵢ are dimensions and M are measures.
 #### 5.1.2 OLAP Operations Formalization
 
 | Operation | Mathematical Definition | Example |
-|-----------|------------------------|---------|
-| **Roll-up** | f: D → D' where |D'| < |D| | Day → Month |
-| **Drill-down** | f: D → D' where |D'| > |D| | Month → Day |
+|-----------|-------------------------|---------|
+| **Roll-up** | f: D → D' where \|D'\| < \|D\| | Day → Month |
+| **Drill-down** | f: D → D' where \|D'\| > \|D\| | Month → Day |
 | **Slice** | C[dᵢ = v] | Sales[Region = 'North'] |
 | **Dice** | C[d₁ ∈ V₁ ∧ ... ∧ dₙ ∈ Vₙ] | Sales[Region ∈ {'North','South'} ∧ Month ∈ {1,2}] |
 | **Pivot** | Permute dimensions | Products × Stores → Stores × Products |
 
 ### 5.2 Advanced OLAP Architectures
+
+#### 5.2.0 Modern Data Stack & Cloud Data Warehousing
+
+The traditional ETL paradigm is evolving towards **ELT (Extract-Load-Transform)** in the cloud era.
+
+| Feature | Traditional DW (On-Premise) | Modern Data Stack (Cloud) |
+|---------|-----------------------------|---------------------------|
+| **Architecture** | SMP (Symmetric Multi-Processing) | MPP (Massively Parallel Processing) |
+| **Scaling** | Vertical (Scale-up) | Horizontal (Scale-out) |
+| **Storage/Compute** | Coupled | Decoupled (Cost optimization) |
+| **Paradigm** | ETL (Transform before Load) | ELT (Load raw, Transform in DB) |
+| **Examples** | Oracle Exadata, Teradata | Snowflake, Google BigQuery, Databricks |
 
 #### 5.2.1 ROLAP (Relational OLAP) Architecture
 
