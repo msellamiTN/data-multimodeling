@@ -1,44 +1,71 @@
-# TD1 — Modèle en étoile (niveau débutant, 1h30)
+# TD1 — Modèle en étoile avancé (niveau intermédiaire, 1h30)
 
 ## Objectifs
 
-- Construire un schéma en étoile simple à partir d’un mini-jeu de données retail.
-- Identifier faits, dimensions, clés et granularité.
-- Rédiger le DDL des dimensions et de la table de faits, puis charger un échantillon.
-- Vérifier la cohérence du modèle via des requêtes de contrôle.
+- Concevoir un schéma en étoile réaliste avec plusieurs niveaux de complexité.
+- Maîtriser les concepts avancés : SCD Type 2, attributs dégénérés, mesures semi-additives.
+- Implémenter un DDL complet avec contraintes et validation qualité.
+- Réaliser des analyses multi-dimensions avec des jointures complexes.
 
-## Prérequis rapides
+## Prérequis
 
-- Rappels : table de faits vs dimensions, grain, clés substitutives.
-- SQL : `CREATE TABLE`, clés primaires/étrangères, `INSERT`, agrégations simples.
+- Concepts de base : faits/dimensions, grain, clés substitutives.
+- SQL avancé : contraintes CHECK, jointures multiples, agrégations complexes.
+- Notions de performance : indexation, partitionnement.
 
-## Jeu de données (extrait)
+## Contexte métier
 
-| date_vente | produit_id | produit_nom | categorie | magasin_id | ville | montant | quantite |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 2024-01-02 | P01 | Chemise Oxford | Textile | M01 | Paris | 120.0 | 2 |
-| 2024-01-02 | P02 | Sneakers Run | Chaussure | M01 | Paris | 75.0 | 1 |
-| 2024-01-03 | P01 | Chemise Oxford | Textile | M02 | Lyon | 60.0 | 1 |
-| 2024-01-04 | P03 | Jeans Slim | Textile | M01 | Paris | 90.0 | 1 |
+Vous travaillez pour une enseigne retail multi-canaux (magasins physiques, e-commerce, mobile) avec :
+- Ventes de produits avec promotions et remises
+- Suivi des stocks et des retours clients  
+- Segmentation client RFM
+- Analyse géographique multi-niveaux
 
 ## Travail demandé
 
-1. Proposer les tables de dimensions (min : date, produit, magasin) et la table de faits `fact_ventes`.
-2. Indiquer la granularité de `fact_ventes` (transaction par produit, magasin, date).
-3. Écrire le DDL complet (clés substitutives `INT AUTO_INCREMENT`, PK/FK).
-4. Insérer 5 à 10 lignes d’exemple (dont celles du tableau ci-dessus).
-5. Dessiner le schéma en étoile (Mermaid ER).
-6. Rédiger 3 requêtes de validation :
-   - volume lignes dans `fact_ventes` ;
-   - top 3 produits par CA ;
-   - CA par ville et par mois.
-7. Lister 3 erreurs fréquentes à éviter sur ce modèle.
+1. **Concevoir** un schéma en étoile complet avec 6 dimensions minimum :
+   - Date (avec attributs calendaires et fiscaux)
+   - Produit (avec SCD Type 2 pour historisation)
+   - Magasin (géolocalisation, caractéristiques)
+   - Client (segmentation RFM, démographie)
+   - Promotion (types de remises, règles)
+   - Canal (physique/en ligne/mobile)
+
+2. **Implémenter** le DDL complet avec :
+   - Clés de substitution (surrogate keys)
+   - Contraintes CHECK pour validation qualité
+   - Clés étrangères et intégrité référentielle
+   - Types de données appropriés
+
+3. **Gérer les concepts avancés** :
+   - Attributs dégénérés (ticket_id, transaction_time)
+   - Mesures additives (quantité, montant) et semi-additives (stock_eod)
+   - SCD Type 2 pour les changements de prix/catégorie
+
+4. **Charger** un jeu de données réalistes (10-15 transactions) avec :
+   - Calculs automatiques des montants (HT, TVA, remises)
+   - Validation des contraintes métier
+   - Gestion des relations plusieurs-à-plusieurs (promotions)
+
+5. **Valider** le modèle avec 5 requêtes d'analyse avancées :
+   - Volumétrie et contrôles qualité
+   - CA par segment client avec panier moyen
+   - Performance par canal avec taux de remise
+   - Analyse temporelle (jours fériés vs weekend)
+   - Impact des promotions et contrôle des stocks
+
+6. **Optimiser** la performance :
+   - Index stratégique sur clés étrangères
+   - Index composites pour requêtes fréquentes
+   - Partitionnement mensuel suggéré
+
+7. **Documenter** les bonnes pratiques et pièges à éviter.
 
 ### Déroulé (1h30)
 
 - 10 min : rappel grain, faits/dimensions, clés substitutives.
 - 20 min : définir dimensions/fait + grain ; écrire le DDL (PK/FK, types).
-- 15 min : insérer l’échantillon (5-10 lignes) et vérifier les FK.
+- 15 min : insérer l’échantillon (10-15 lignes) et vérifier les FK.
 - 20 min : dessiner le schéma Mermaid et vérifier cohérence (1 FK = 1 dimension).
 - 20 min : requêtes de validation (volume, top 3 produits, CA ville/mois).
 - 5 min : lister erreurs fréquentes + amélioration (canal, hiérarchie produit).
