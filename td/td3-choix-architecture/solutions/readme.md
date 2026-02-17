@@ -20,7 +20,7 @@
 ```mermaid
 flowchart TD
   A[Systèmes sources] --> B[Staging]
-  B --> C[Entrepôt ROLAP (détails)]
+  B --> C[Entrepôt ROLAP - détails]
   C --> D[Cubes MOLAP (agrégés récents)]
   D --> E[BI/Tableaux de bord]
   C --> F[Requêtes ad hoc ROLAP]
@@ -44,7 +44,7 @@ flowchart TD
 |------------------|--------------------------------|--------------------------------|--------------------------------|
 | Latence          | Moyenne (<20s ad hoc)          | Excellente (<5s agrégés)       | Excellente récent, moyenne hist|
 | Coût stockage    | Faible                         | Élevé                          | Moyen                          |
-| Gouvernance      | Flexible, requêtes libres      | Pré-agrégés, moins flexible   | Mix, équilibré                 |
+| Gouvernance      | Flexible, requêtes libres      | Pré-agrégés, moins flexible    | Mix, équilibré                 |
 
 ## Livrables attendus
 
