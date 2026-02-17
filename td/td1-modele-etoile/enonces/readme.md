@@ -50,6 +50,14 @@
 - Schéma étoile lisible (Mermaid) aligné avec le DDL.
 - Requêtes de validation exécutables et résultats cohérents.
 
+## Questions de qualité (scénarios)
+
+1. **Qualité du grain** : si une ligne de `fact_ventes` correspond tantôt à un ticket complet et tantôt à une ligne produit, quel impact sur `SUM(montant)` ?
+2. **Qualité des clés** : pourquoi utiliser des clés substitutives (SK) dans les dimensions ? Citer un cas où la clé naturelle change.
+3. **Qualité des mesures** : donner un exemple de mesure non additive qui ne doit pas être stockée telle quelle dans `fact_ventes`.
+4. **Qualité référentielle** : proposer une requête de contrôle pour détecter des lignes de faits sans dimension correspondante.
+5. **Qualité performance** : citer 2 index utiles et expliquer sur quelles requêtes de validation ils ont un impact.
+
 ## Attendus (correction synthétique)
 
 - Dimensions avec clé surrogate et attributs métier ; fact avec clés étrangères + mesures `montant`, `quantite`.

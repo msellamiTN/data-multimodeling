@@ -1,4 +1,4 @@
-# TD3 — Choix d’architecture (ROLAP / MOLAP / HOLAP) — niveau avancé
+# TD3 — Choix d’architecture (ROLAP / MOLAP / HOLAP) — niveau avancé (1h30)
 
 ## Objectifs
 
@@ -23,6 +23,22 @@ Entreprise retail avec :
 3. Schématiser le flux (Mermaid) : sources → stockage détaillé → agrégés → BI.
 4. Lister 3 risques (coût, cohérence des agrégés, performance) et les parades.
 5. Définir un mini-SLA : temps de réponse attendu par type de requête et fenêtre de rafraîchissement.
+
+## Déroulé (1h30)
+
+- 10 min : rappel ROLAP/MOLAP/HOLAP, notions de SLA.
+- 25 min : analyse du contexte (volume, utilisateurs, types de requêtes) et choix d’architecture.
+- 25 min : plan d’actualisation (fenêtres, fréquence, périmètre des agrégés) + schéma Mermaid.
+- 20 min : risques/parades et mini-SLA chiffré.
+- 10 min : restitution et discussion.
+
+## Questions de qualité (scénarios)
+
+1. **Qualité du choix** : quels critères manquent si on choisit uniquement sur la performance ?
+2. **Qualité du SLA** : comment vérifier qu’un SLA <5s est réaliste (périmètre, agrégats, index, cache) ?
+3. **Qualité de l’actualisation** : quelle différence entre fraîcheur des données et latence de requête ?
+4. **Qualité/cohérence** : comment garantir que les agrégés MOLAP = détail ROLAP (même règle métier) ?
+5. **Qualité coût** : citer 2 leviers pour réduire le coût sans dégrader fortement l’usage (périmètre MOLAP, archivage froid, partitions).
 
 ## Attendus (correction synthétique)
 

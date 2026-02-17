@@ -1,4 +1,4 @@
-# TD2 — OLAP : opérations (niveau intermédiaire)
+# TD2 — OLAP : opérations (niveau intermédiaire, 1h30)
 
 ## Objectifs
 
@@ -37,6 +37,22 @@ Dataset fourni (échantillon) : `fact_ventes`, `dim_date`, `dim_produit`, `dim_m
 - Requêtes incluant ROLLUP/CTE + fonctions fenêtre (`LAG`, `DENSE_RANK`).
 - Slice/dice correctement définis ; pivot produit x magasin.
 - Contrôles d’égalité des totaux par niveau.
+
+## Déroulé (1h30)
+
+- 10 min : rappel cube, dimensions/hiérarchies, mesures additives.
+- 30 min : requêtes d’agrégation (mois/produit/magasin) + top-N.
+- 25 min : variations temporelles (LAG) + pivot.
+- 15 min : contrôles de cohérence (totaux, égalités par niveau) + discussion.
+- 10 min : restitution et justification (choix des partitions, niveaux, checks).
+
+## Questions de qualité (scénarios)
+
+1. **Qualité du cube** : le grain de `fact_ventes` est-il constant (1 ligne = 1 vente produit-magasin-date) ? Quelles erreurs si le grain varie ?
+2. **Qualité des agrégations** : `SUM(montant)` est-elle toujours valide ? Citer un exemple de mesure non additive.
+3. **Qualité des requêtes** : comment vérifier que le `GROUP BY` ne double-compte pas (jointures) ? Proposer un test.
+4. **Cohérence** : montrer un contrôle : total annuel = somme des totaux mensuels (même périmètre).
+5. **Performance** : proposer 2 index utiles (et pourquoi) pour accélérer les requêtes (dimension temps, clés FK, colonnes groupées).
 
 ## Diagramme des opérations
 
