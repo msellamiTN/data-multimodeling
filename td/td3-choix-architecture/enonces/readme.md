@@ -50,7 +50,7 @@ Entreprise retail avec :
 flowchart TD
   A[Systèmes sources] --> B[Staging]
   B --> C[Entrepôt ROLAP - détails]
-  C --> D[Cubes MOLAP (agrégés récents)]
+  C --> D[Cubes MOLAP agrégés récents]
   D --> E[BI/Tableaux de bord]
   C --> F[Requêtes ad hoc ROLAP]
 ```
