@@ -1,4 +1,6 @@
-# TD0 — OLTP : comprendre les limites opérationnelles et la nécessité d’un DWH/OLAP (1h30)
+![alt text](image-1.png)
+#  Modélisation Modélisation multidémentionnelle et Entrepôt de Données
+## TD0 — OLTP : comprendre les limites opérationnelles et la nécessité d’un DWH/OLAP (1h30)
 
 ## Objectifs
 
@@ -249,7 +251,7 @@ CREATE TABLE resume_ventes_mensuelles (
 5. **Séparation OLTP/OLAP** : donner 3 bénéfices concrets de séparer les workloads (perf, gouvernance, disponibilité) et 1 risque (décalage de fraîcheur).
 
 ## Exemple de schéma cible (Mermaid)
-
+![alt text](image.png)
 ```mermaid
 graph TD
   A[Sources OLTP] --> B[Staging]

@@ -1,4 +1,6 @@
-# TD1 — Modèle en étoile avancé (niveau intermédiaire, 1h30)
+![alt text](image.png)
+#  Modélisation Modélisation multidémentionnelle et Entrepôt de Données
+## TD1 — Modèle en étoile (Semaine 2)
 
 ## Objectifs
 

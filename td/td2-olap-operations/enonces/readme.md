@@ -1,4 +1,6 @@
-# TD2 — OLAP : opérations (niveau intermédiaire, 1h30)
+![alt text](../../td0-oltp-intro/enonces/image-1.png)
+#  Modélisation Modélisation multidémentionnelle et Entrepôt de Données
+## TD2 — OLAP : opérations et Analyse Multidimensionnelle
 
 ## Objectifs
 
