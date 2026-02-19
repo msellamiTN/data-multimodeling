@@ -95,7 +95,7 @@
   ORDER BY mois, ca DESC;
   ```
 
-  > À reproduire puis comparer avec la version matérialisée `fact_ventes` (voir notebook) pour mettre en évidence la différence OLTP vs pré-OLAP.
+  > À reproduire puis comparer avec la version optimisée `resume_ventes_mensuelles` (voir notebook) pour mettre en évidence la différence entre requête directe et table pré-calculée.
 
 ## Mini-cas à rejouer (aligné avec le notebook)
 

@@ -49,12 +49,12 @@ erDiagram
 
 ## Mini-cas : Solution Complète
 
-### 1. Requête OLTP complexe : CA mensuel par catégorie/ville
+### 1. Diagnostic des performances
 
 **Solution** :
 
 ```sql
--- Requête OLTP complexe (3 jointures + agrégation)
+-- Requête problématique (3 jointures + agrégation)
 SELECT 
     strftime('%Y-%m', c.date_commande) AS mois,
     p.categorie,
@@ -79,60 +79,71 @@ ORDER BY mois, ca_mensuel DESC;
 - **Absence d'index** optimisés pour ce pattern analytique
 - **Impact** sur les performances des transactions opérationnelles
 
-### 2. Matérialisation (pré-OLAP) : Table de faits `fact_ventes`
+### 2. Optimisation par pré-calcul : Table résumée `resume_ventes_mensuelles`
 
 **Solution** :
 
 ```sql
--- Création de la table de faits matérialisée (ETL)
-CREATE TABLE fact_ventes AS
+-- Création de la table résumée (pré-calcul)
+CREATE TABLE resume_ventes_mensuelles (
+    mois TEXT NOT NULL,
+    categorie TEXT NOT NULL,
+    ville TEXT NOT NULL,
+    ca_mensuel REAL NOT NULL,
+    nb_commandes INTEGER NOT NULL,
+    quantite_vendue INTEGER NOT NULL,
+    PRIMARY KEY (mois, categorie, ville)
+);
+
+-- Alimentation de la table résumée
+INSERT INTO resume_ventes_mensuelles
 SELECT 
-    lc.produit_id,
-    lc.commande_id,
-    c.client_id,
-    c.date_commande,
-    p.categorie,      -- Dénormalisé pour éviter la jointure produit
-    cl.ville,         -- Dénormalisé pour éviter la jointure client
-    (lc.quantite * lc.prix_reel) as montant_vente
-FROM lignes_commande lc
-JOIN commandes c ON lc.commande_id = c.commande_id
+    strftime('%Y-%m', c.date_commande) AS mois,
+    p.categorie,
+    cl.ville,
+    SUM(lc.quantite * lc.prix_reel) AS ca_mensuel,
+    COUNT(DISTINCT c.commande_id) AS nb_commandes,
+    SUM(lc.quantite) AS quantite_vendue
+FROM commandes c
+JOIN lignes_commande lc ON lc.commande_id = c.commande_id
 JOIN produits p ON lc.produit_id = p.produit_id
-JOIN clients cl ON c.client_id = cl.client_id;
+JOIN clients cl ON c.client_id = cl.client_id
+WHERE c.statut = 'LIVRE'
+GROUP BY strftime('%Y-%m', c.date_commande), p.categorie, cl.ville;
 ```
 
-**Requête OLAP équivalente** :
+**Requête optimisée sur la table résumée** :
 
 ```sql
--- Requête OLAP sur table de faits (simple et performante)
+-- Requête simple et performante sur table résumée
 SELECT 
-    strftime('%Y-%m', date_commande) AS mois,
+    mois,
     categorie,
     ville,
-    SUM(montant_vente) AS ca_mensuel,
-    COUNT(DISTINCT commande_id) AS nb_commandes,
-    SUM(montant_vente) AS quantite_vendue
-FROM fact_ventes
-WHERE strftime('%Y-%m', date_commande) >= '2024-01'
-GROUP BY strftime('%Y-%m', date_commande), categorie, ville
+    ca_mensuel,
+    nb_commandes,
+    quantite_vendue
+FROM resume_ventes_mensuelles
+WHERE mois >= '2024-01'
 ORDER BY mois, ca_mensuel DESC;
 ```
 
 ### 3. Comparaison des approches
 
-**Pourquoi la version matérialisée est plus adaptée** :
+**Pourquoi la version avec table résumée est plus adaptée** :
 
 - **🚀 Performance** : Plus de jointures à l'exécution, lecture directe des données pré-agrégées. La requête passe de plusieurs secondes/minutes à quelques millisecondes.
 
-- **🎯 Indexation optimisée** : La table `fact_ventes` peut être indexée spécifiquement pour les patterns analytiques (`mois, categorie, ville`) sans impacter les transactions OLTP.
+- **🎯 Indexation optimisée** : La table `resume_ventes_mensuelles` peut être indexée spécifiquement pour les patterns analytiques (`mois, categorie, ville`) sans impacter les transactions opérationnelles.
 
-- **⚡ Séparation des charges** : Les requêtes analytiques n'impactent plus le système opérationnel. L'ETL s'exécute une fois par jour/nuit, libérant les ressources pour les transactions.
+- **⚡ Séparation des charges** : Les requêtes analytiques n'impactent plus le système opérationnel. Le calcul s'exécute une fois par jour/nuit, libérant les ressources pour les transactions.
 
 ### 4. Résultats de la démo
 
 **Résultats observés** :
 
 ```text
-=== REQUÊTE OLTP COMPLEXE ===
+=== REQUÊTE DIRECTE (COMPLEXE) ===
 Temps d'exécution : ~0.05s (démo)
 Résultats :
 mois     | categorie    | ville | ca_mensuel | nb_commandes
@@ -141,31 +152,31 @@ mois     | categorie    | ville | ca_mensuel | nb_commandes
 2024-01  | Électronique | Lyon  | 800.00     | 1
 2024-02  | Mobilier     | Paris | 150.00     | 1
 
-=== REQUÊTE OLAP MATÉRIALISÉE ===
+=== REQUÊTE TABLE RÉSUMÉE (SIMPLE) ===
 Temps d'exécution : ~0.01s (démo)
 Résultats identiques mais requête beaucoup plus simple !
 ```
 
-### 5. Plan minimal de passage OLTP → OLAP
+### 5. Plan de mise à jour
 
 **Solution détaillée** :
 
-**Étape 1 - Audit OLTP**
+**Étape 1 - Initialisation**
 - Analyser les sources existantes (tables `commandes`, `lignes_commande`, `produits`, `clients`)
-- Identifier le grain (ligne de commande) et la volumétrie
-- Documenter les règles métier (statuts, catégories)
+- Créer la table `resume_ventes_mensuelles` vide
+- Exécuter le script de chargement initial
 
-**Étape 2 - Modélisation DWH**
-- Concevoir le schéma en étoile avec tables de faits et dimensions
-- Définir les clés de substitution (surrogate keys)
-- Prévoir les SCD (Slowly Changing Dimensions)
+**Étape 2 - Mise à jour quotidienne**
+- Extraire les nouvelles transactions du jour
+- Calculer les agrégats et insérer dans la table
+- Gérer les mises à jour (remplacer les données du mois en cours)
 
-**Étape 3 - ETL initial**
-- Développer le script de chargement vers `fact_ventes`
-- Valider l'intégrité des données
-- Mettre en place les rafraîchissements réguliers
+**Étape 3 - Automatisation**
+- Planifier un job quotidien (ex: 2h du matin)
+- Ajouter des logs et contrôles qualité
+- Mettre en place des alertes en cas d'échec
 
-**Durée estimée** : 2-3 mois pour un projet simple de cette taille.
+**Fréquence estimée** : Quotidienne pour les données du jour, mensuelle pour les consolidations.
 
 ## Exemples SQL OLTP (référence)
 
@@ -174,7 +185,7 @@ Résultats identiques mais requête beaucoup plus simple !
 - Total d'une commande : `SELECT c.commande_id, SUM(lc.quantite * lc.prix_reel) AS total_ht FROM commandes c JOIN lignes_commande lc ON lc.commande_id = c.commande_id WHERE c.commande_id = 1001 GROUP BY c.commande_id;`
 - Analytique coûteuse en OLTP (3 jointures + agrégat) : CA mensuel par catégorie/ville sur `commandes`, `lignes_commande`, `produits`, `clients`.
 
-> Voir le notebook TD0 : il reproduit cette requête puis la compare à une version matérialisée `fact_ventes` (pré-OLAP) pour montrer la réduction des jointures et l'intérêt de séparer OLTP/OLAP.
+> Voir le notebook TD0 : il reproduit cette requête puis la compare à une version optimisée `resume_ventes_mensuelles` (table pré-calculée) pour montrer la réduction des jointures et l'intérêt de séparer les requêtes analytiques des transactions.
 
 ## Plan de passage (3 étapes)
 
