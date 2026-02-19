@@ -92,7 +92,7 @@ Vous travaillez pour une enseigne retail multi-canaux (magasins physiques, e-com
 - Dimensions avec clé surrogate et attributs métier ; fact avec clés étrangères + mesures `montant`, `quantite`.
 - Granularité : ligne de transaction (par produit, par magasin, par date).
 - Schéma en étoile (exemple) :
-
+![alt text](image-1.png)
 ```mermaid
 erDiagram
   DIM_DATE ||--o{ FACT_VENTE : date_id
