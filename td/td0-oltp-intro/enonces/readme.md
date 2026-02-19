@@ -101,18 +101,18 @@
 
 ### 🎯 Objectif de l'exercice
 
-Vous êtes consultant BI chez un e-commerçant qui rencontre des problèmes de performance sur son système opérationnel. Votre mission : démontrer les limites de l'OLTP et proposer une solution OLAP en utilisant le notebook comme support de démonstration.
+Vous êtes développeur/analyste chez un e-commerçant. Le service commercial se plaint que le dashboard met plus de 30 secondes à charger. Votre mission : analyser le problème et proposer une solution en utilisant vos connaissances SQL actuelles.
 
 ---
 
-### 📋 Exercice 1 : Diagnostic des performances OLTP
+### 📋 Exercice 1 : Diagnostic des performances
 
-**Contexte** : Le service commercial se plaint que le dashboard "CA mensuel par catégorie et ville" met plus de 30 secondes à se charger.
+**Contexte** : Le dashboard "CA mensuel par catégorie et ville" est très lent.
 
 **Votre mission** :
 1. **Analyser** la requête problématique ci-dessous
-2. **Identifier** les goulots d'étranglement
-3. **Expliquer** pourquoi cette requête dégrade les performances du système transactionnel
+2. **Identifier** pourquoi elle est lente
+3. **Expliquer** l'impact sur le système
 
 **Requête à analyser** :
 ```sql
@@ -133,96 +133,93 @@ ORDER BY mois, ca_mensuel DESC;
 ```
 
 **Questions guides** :
-- Quelles sont les 3 jointures obligatoires ?
-- Pourquoi l'agrégation est-elle coûteuse ?
-- Quel est l'impact sur les transactions concurrentes ?
-- Quels index manquent pour ce type de requête ?
+- Combien de tables sont jointes ? Est-ce normal ?
+- Pourquoi l'agrégation `SUM()` est-elle coûteuse ?
+- Que se passe-t-il quand plusieurs utilisateurs lancent cette requête ?
+- Pourquoi les index actuels sont-ils insuffisants ?
 
 ---
 
-### 📋 Exercice 2 : Conception de la solution OLAP
+### 📋 Exercice 2 : Optimisation par pré-calcul
 
-**Contexte** : Vous devez proposer une architecture qui résout ces problèmes de performance.
+**Contexte** : Vous voulez créer une table résumée pour accélérer le dashboard.
 
 **Votre mission** :
-1. **Concevoir** une table de faits `fact_ventes` optimisée
-2. **Écrire** le script ETL de transformation
-3. **Démontrer** le gain de performance
+1. **Créer** une table qui stocke les résultats pré-calculés
+2. **Écrire** le script pour la remplir
+3. **Écrire** la requête simplifiée qui utilise cette table
 
-**Structure cible de la table de faits** :
+**Table résumée à concevoir** :
 ```sql
--- Table à concevoir
-CREATE TABLE fact_ventes (
+-- Table à créer pour stocker les agrégats mensuels
+CREATE TABLE resume_ventes_mensuelles (
     mois TEXT,           -- '2024-01'
     categorie TEXT,      -- 'Électronique', 'Mobilier'...
     ville TEXT,          -- 'Paris', 'Lyon'...
-    montant REAL,        -- CA mensuel
+    ca_mensuel REAL,     -- Chiffre d'affaires mensuel
     nb_commandes INTEGER -- Nombre de commandes
 );
 ```
 
 **Étapes à réaliser** :
-- **Étape 2.1** : Écrire le CREATE TABLE complet avec contraintes
-- **Étape 2.2** : Écrire l'ETL (INSERT INTO...SELECT) qui peuple la table
-- **Étape 2.3** : Écrire la requête OLAP équivalente (simple, sans jointure)
-- **Étape 2.4** : Expliquer les avantages de cette approche
+- **Étape 2.1** : Compléter le CREATE TABLE avec PRIMARY KEY appropriée
+- **Étape 2.2** : Écrire l'INSERT INTO...SELECT qui calcule et stocke les agrégats
+- **Étape 2.3** : Écrire la nouvelle requête du dashboard (simple, sans jointure)
+- **Étape 2.4** : Expliquer pourquoi cette approche est plus rapide
 
 ---
 
-### 📋 Exercice 3 : Comparaison et justification
+### 📋 Exercice 3 : Comparaison des approches
 
-**Contexte** : Vous devez convaincre le DSI d'adopter cette nouvelle architecture.
+**Contexte** : Vous devez justifier votre solution technique.
 
-**Votre mission** : Rédiger une argumentation structurée en 3 points :
+**Votre mission** : Expliquer en 3 points pourquoi la table résumée est meilleure :
 
-1. **Performance technique** : Pourquoi la requête est plus rapide ?
-2. **Indexation optimisée** : Quels index créer et pourquoi ?
-3. **Séparation des charges** : Quels bénéfices pour l'exploitation ?
+1. **Performance des requêtes** : Pourquoi la nouvelle requête est plus rapide ?
+2. **Impact sur le système** : Comment cela protège les opérations quotidiennes ?
+3. **Maintenance** : Quels sont les avantages pour l'équipe technique ?
 
-**Format attendu** : 3 bullets argumentés avec exemples concrets.
+**Format attendu** : 3 paragraphs explicatifs avec exemples concrets.
 
 ---
 
-### 📋 Exercice 4 : Démonstration pratique (optionnel)
+### 📋 Exercice 4 : Validation pratique (optionnel)
 
-**Contexte** : Validation par la preuve.
+**Contexte** : Prouver que votre solution fonctionne.
 
 **Votre mission** :
-1. **Exécuter** les deux requêtes dans le notebook TD0
-2. **Mesurer** les temps d'exécution
-3. **Comparer** les résultats
-4. **Capturer** les outputs pour illustrer votre rapport
+1. **Exécuter** les deux requêtes dans le notebook
+2. **Comparer** les temps d'exécution
+3. **Documenter** les résultats observés
 
-**Résultats à documenter** :
-- Temps d'exécution OLTP vs OLAP
-- Nombre de lignes scannées dans chaque cas
-- Complexité des plans d'exécution
+**Résultats à noter** :
+- Temps d'exécution de chaque requête
+- Complexité (nombre de lignes SQL)
+- Facilité de compréhension du code
 
 ---
 
-### 📋 Exercice 5 : Plan de migration
+### 📋 Exercice 5 : Plan de mise à jour
 
-**Contexte** : Passage de la théorie à la pratique.
+**Contexte** : Comment maintenir la table résumée à jour ?
 
-**Votre mission** : Détailler le plan de migration en 5 étapes clés :
+**Votre mission** : Proposer un plan pratique en 3 étapes :
 
-1. **Extract** : Comment extraire les données depuis l'OLTP ?
-2. **Nettoyer** : Quelles transformations appliquer ?
-3. **Conformer dimensions** : Comment structurer les dimensions ?
-4. **Charger facts** : Comment peupler la table de faits ?
-5. **Publier vues/OLAP** : Comment rendre les données accessibles ?
+1. **Initialisation** : Comment créer et peupler la table la première fois ?
+2. **Mise à jour** : Comment ajouter les nouvelles données chaque jour ?
+3. **Automatisation** : Comment rendre ce processus automatique ?
 
-**Livrable attendu** : Plan d'action avec durée estimée par étape.
+**Livrable attendu** : Plan d'action avec fréquence et responsabilité.
 
 ---
 
 ### 🎯 Critères de réussite
 
-- **Compréhension** : Vous expliquez clairement les problèmes OLTP
-- **Solution** : Vous proposez une architecture OLAP cohérente
-- **Argumentation** : Vous justifiez vos choix techniques
-- **Pratique** : Vous validez par la démonstration dans le notebook
-- **Vision** : Vous proposez un plan de migration réaliste
+- **Analyse** : Vous identifiez correctement les problèmes de performance
+- **Solution** : Vous proposez une table résumée cohérente
+- **Justification** : Vous expliquez les bénéfices techniques
+- **Pratique** : Vous validez avec le notebook
+- **Vision** : Vous proposez un plan de maintenance réaliste
 
 ## Déroulé (1h30)
 
