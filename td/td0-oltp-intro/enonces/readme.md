@@ -14,12 +14,30 @@
 
 ## Jeu de données OLTP (extrait simplifié)
 
-| id_commande | id_client | id_produit | quantite | prix_unitaire | date_commande | statut |
-| --- | --- | --- | --- | --- | --- | --- |
-| 101 | C01 | P10 | 2 | 45.00 | 2024-01-02 | livré |
-| 102 | C02 | P11 | 1 | 120.00 | 2024-01-02 | livré |
-| 103 | C01 | P12 | 1 | 60.00 | 2024-01-03 | en cours |
-| 104 | C03 | P10 | 3 | 45.00 | 2024-01-04 | livré |
+| client_id | nom | ville | segment |
+| --- | --- | --- | --- |
+| 1 | Alice Dupont | Paris | VIP |
+| 2 | Bob Martin | Lyon | Standard |
+| 3 | Charlie Durand | Paris | Standard |
+
+| produit_id | nom | categorie | prix_standard |
+| --- | --- | --- | --- |
+| 10 | Laptop Pro | Électronique | 1200.0 |
+| 11 | Smartphone X | Électronique | 800.0 |
+| 12 | Chaise Bureau | Mobilier | 150.0 |
+
+| commande_id | client_id | date_commande | statut |
+| --- | --- | --- | --- |
+| 1001 | 1 | 2024-01-15 | LIVRE |
+| 1002 | 2 | 2024-01-16 | LIVRE |
+| 1003 | 1 | 2024-02-01 | EN_COURS |
+
+| commande_id | produit_id | quantite | prix_reel |
+| --- | --- | --- | --- |
+| 1001 | 10 | 1 | 1200.0 |
+| 1001 | 12 | 2 | 140.0 |
+| 1002 | 11 | 1 | 800.0 |
+| 1003 | 12 | 1 | 150.0 |
 
 ## Travail demandé
 
@@ -40,26 +58,25 @@
   ```sql
   SELECT statut
   FROM commandes
-  WHERE commande_id = 101;
+  WHERE commande_id = 1001;
   ```
 
-- **Stock par produit** (jointure stock + produits) :
+- **Détail client** :
 
   ```sql
-  SELECT p.produit_id, p.nom, s.quantite_dispo
-  FROM stock s
-  JOIN produits p ON p.produit_id = s.produit_id
-  WHERE p.produit_id = 'P10';
+  SELECT nom, ville, segment
+  FROM clients
+  WHERE client_id = 1;
   ```
 
-- **Total d’une commande** (somme lignes) :
+- **Total d'une commande** (somme lignes) :
 
   ```sql
   SELECT c.commande_id,
-         SUM(lc.quantite * lc.prix_unitaire) AS total_ht
+         SUM(lc.quantite * lc.prix_reel) AS total_ht
   FROM commandes c
   JOIN lignes_commande lc ON lc.commande_id = c.commande_id
-  WHERE c.commande_id = 101
+  WHERE c.commande_id = 1001
   GROUP BY c.commande_id;
   ```
 
@@ -69,11 +86,11 @@
   SELECT strftime('%Y-%m', c.date_commande) AS mois,
          p.categorie,
          cl.ville,
-         SUM(lc.quantite * lc.prix_unitaire) AS ca
+         SUM(lc.quantite * lc.prix_reel) AS ca
   FROM commandes c
   JOIN lignes_commande lc ON lc.commande_id = c.commande_id
-  JOIN produits p ON p.produit_id = lc.produit_id
-  JOIN clients cl ON cl.client_id = c.client_id
+  JOIN produits p ON lc.produit_id = p.produit_id
+  JOIN clients cl ON c.client_id = cl.client_id
   GROUP BY strftime('%Y-%m', c.date_commande), p.categorie, cl.ville
   ORDER BY mois, ca DESC;
   ```
@@ -82,11 +99,49 @@
 
 ## Mini-cas à rejouer (aligné avec le notebook)
 
-1. **Requête OLTP complexe** : écrire et commenter la requête CA mensuel par catégorie/ville sur les tables `commandes`, `lignes_commande`, `produits`, `clients` (3 jointures + agrégation).
-2. **Matérialisation (pré-OLAP)** : dériver une table de faits `fact_ventes(mois, categorie, ville, montant)` et montrer la même requête avec un `GROUP BY` direct.
-3. **Comparer** : lister en 3 bullets pourquoi la version matérialisée est plus adaptée à l’analytique (moins de jointures, index ciblés, séparation charge).
-4. **Optionnel** : exécuter la démo SQLite du notebook et coller les résultats pour illustrer la différence.
-5. **Plan minimal de passage** : étapes clés (extract, nettoyer, conformer dimensions, charger facts, publier vues/OLAP).
+**Requête OLTP complexe** : écrire et commenter la requête CA mensuel par catégorie/ville sur les tables `commandes`, `lignes_commande`, `produits`, `clients` (3 jointures + agrégation).
+
+**Matérialisation (pré-OLAP)** : dériver une table de faits `fact_ventes(mois, categorie, ville, montant)` et montrer la même requête avec un `GROUP BY` direct.
+
+**Comparer** : lister en 3 bullets pourquoi la version matérialisée est plus adaptée à l'analytique (moins de jointures, index ciblés, séparation charge).
+
+**Optionnel** : exécuter la démo SQLite du notebook et coller les résultats pour illustrer la différence.
+
+**Plan minimal de passage** : étapes clés (extract, nettoyer, conformer dimensions, charger facts, publier vues/OLAP).
+
+### Détail du travail demandé
+
+#### 1. Requête OLTP complexe : CA mensuel par catégorie/ville
+
+**Contexte** : Vous devez analyser les ventes mensuelles par catégorie de produit et par ville pour le dashboard commercial.
+
+**Travail demandé** :
+- Écrire la requête SQL sur les tables `commandes`, `lignes_commande`, `produits`, `clients`
+- Utiliser 3 jointures pour reconstituer l'information
+- Agréger par mois, catégorie et ville
+- Commenter les problèmes de performance potentiels
+
+#### 2. Matérialisation (pré-OLAP) : Table de faits `fact_ventes`
+
+**Approche** : Créer une table de faits dénormalisée pour accélérer l'analyse.
+
+**Travail demandé** :
+- Proposer la structure de la table `fact_ventes(mois, categorie, ville, montant)`
+- Écrire le script ETL de création et chargement
+- Écrire la requête équivalente avec un `GROUP BY` direct
+- Expliquer les avantages de cette approche
+
+#### 3. Comparaison des approches
+
+**Travail demandé** : Lister en 3 bullets pourquoi la version matérialisée est plus adaptée à l'analytique (moins de jointures, index ciblés, séparation charge).
+
+#### 4. Optionnel : Exécution de la démo
+
+**Travail demandé** : Exécuter les requêtes dans le notebook et comparer les résultats et temps d'exécution pour illustrer la différence.
+
+#### 5. Plan minimal de passage
+
+**Travail demandé** : Décrire les étapes clés (extract, nettoyer, conformer dimensions, charger facts, publier vues/OLAP).
 
 ## Déroulé (1h30)
 
