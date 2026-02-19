@@ -99,49 +99,130 @@
 
 ## Mini-cas à rejouer (aligné avec le notebook)
 
-**Requête OLTP complexe** : écrire et commenter la requête CA mensuel par catégorie/ville sur les tables `commandes`, `lignes_commande`, `produits`, `clients` (3 jointures + agrégation).
+### 🎯 Objectif de l'exercice
 
-**Matérialisation (pré-OLAP)** : dériver une table de faits `fact_ventes(mois, categorie, ville, montant)` et montrer la même requête avec un `GROUP BY` direct.
+Vous êtes consultant BI chez un e-commerçant qui rencontre des problèmes de performance sur son système opérationnel. Votre mission : démontrer les limites de l'OLTP et proposer une solution OLAP en utilisant le notebook comme support de démonstration.
 
-**Comparer** : lister en 3 bullets pourquoi la version matérialisée est plus adaptée à l'analytique (moins de jointures, index ciblés, séparation charge).
+---
 
-**Optionnel** : exécuter la démo SQLite du notebook et coller les résultats pour illustrer la différence.
+### 📋 Exercice 1 : Diagnostic des performances OLTP
 
-**Plan minimal de passage** : étapes clés (extract, nettoyer, conformer dimensions, charger facts, publier vues/OLAP).
+**Contexte** : Le service commercial se plaint que le dashboard "CA mensuel par catégorie et ville" met plus de 30 secondes à se charger.
 
-### Détail du travail demandé
+**Votre mission** :
+1. **Analyser** la requête problématique ci-dessous
+2. **Identifier** les goulots d'étranglement
+3. **Expliquer** pourquoi cette requête dégrade les performances du système transactionnel
 
-#### 1. Requête OLTP complexe : CA mensuel par catégorie/ville
+**Requête à analyser** :
+```sql
+-- Requête actuelle (problématique)
+SELECT 
+    strftime('%Y-%m', c.date_commande) AS mois,
+    p.categorie,
+    cl.ville,
+    SUM(lc.quantite * lc.prix_reel) AS ca_mensuel,
+    COUNT(DISTINCT c.commande_id) AS nb_commandes
+FROM commandes c
+JOIN lignes_commande lc ON lc.commande_id = c.commande_id
+JOIN produits p ON lc.produit_id = p.produit_id
+JOIN clients cl ON c.client_id = cl.client_id
+WHERE c.statut = 'LIVRE'
+GROUP BY strftime('%Y-%m', c.date_commande), p.categorie, cl.ville
+ORDER BY mois, ca_mensuel DESC;
+```
 
-**Contexte** : Vous devez analyser les ventes mensuelles par catégorie de produit et par ville pour le dashboard commercial.
+**Questions guides** :
+- Quelles sont les 3 jointures obligatoires ?
+- Pourquoi l'agrégation est-elle coûteuse ?
+- Quel est l'impact sur les transactions concurrentes ?
+- Quels index manquent pour ce type de requête ?
 
-**Travail demandé** :
-- Écrire la requête SQL sur les tables `commandes`, `lignes_commande`, `produits`, `clients`
-- Utiliser 3 jointures pour reconstituer l'information
-- Agréger par mois, catégorie et ville
-- Commenter les problèmes de performance potentiels
+---
 
-#### 2. Matérialisation (pré-OLAP) : Table de faits `fact_ventes`
+### 📋 Exercice 2 : Conception de la solution OLAP
 
-**Approche** : Créer une table de faits dénormalisée pour accélérer l'analyse.
+**Contexte** : Vous devez proposer une architecture qui résout ces problèmes de performance.
 
-**Travail demandé** :
-- Proposer la structure de la table `fact_ventes(mois, categorie, ville, montant)`
-- Écrire le script ETL de création et chargement
-- Écrire la requête équivalente avec un `GROUP BY` direct
-- Expliquer les avantages de cette approche
+**Votre mission** :
+1. **Concevoir** une table de faits `fact_ventes` optimisée
+2. **Écrire** le script ETL de transformation
+3. **Démontrer** le gain de performance
 
-#### 3. Comparaison des approches
+**Structure cible de la table de faits** :
+```sql
+-- Table à concevoir
+CREATE TABLE fact_ventes (
+    mois TEXT,           -- '2024-01'
+    categorie TEXT,      -- 'Électronique', 'Mobilier'...
+    ville TEXT,          -- 'Paris', 'Lyon'...
+    montant REAL,        -- CA mensuel
+    nb_commandes INTEGER -- Nombre de commandes
+);
+```
 
-**Travail demandé** : Lister en 3 bullets pourquoi la version matérialisée est plus adaptée à l'analytique (moins de jointures, index ciblés, séparation charge).
+**Étapes à réaliser** :
+- **Étape 2.1** : Écrire le CREATE TABLE complet avec contraintes
+- **Étape 2.2** : Écrire l'ETL (INSERT INTO...SELECT) qui peuple la table
+- **Étape 2.3** : Écrire la requête OLAP équivalente (simple, sans jointure)
+- **Étape 2.4** : Expliquer les avantages de cette approche
 
-#### 4. Optionnel : Exécution de la démo
+---
 
-**Travail demandé** : Exécuter les requêtes dans le notebook et comparer les résultats et temps d'exécution pour illustrer la différence.
+### 📋 Exercice 3 : Comparaison et justification
 
-#### 5. Plan minimal de passage
+**Contexte** : Vous devez convaincre le DSI d'adopter cette nouvelle architecture.
 
-**Travail demandé** : Décrire les étapes clés (extract, nettoyer, conformer dimensions, charger facts, publier vues/OLAP).
+**Votre mission** : Rédiger une argumentation structurée en 3 points :
+
+1. **Performance technique** : Pourquoi la requête est plus rapide ?
+2. **Indexation optimisée** : Quels index créer et pourquoi ?
+3. **Séparation des charges** : Quels bénéfices pour l'exploitation ?
+
+**Format attendu** : 3 bullets argumentés avec exemples concrets.
+
+---
+
+### 📋 Exercice 4 : Démonstration pratique (optionnel)
+
+**Contexte** : Validation par la preuve.
+
+**Votre mission** :
+1. **Exécuter** les deux requêtes dans le notebook TD0
+2. **Mesurer** les temps d'exécution
+3. **Comparer** les résultats
+4. **Capturer** les outputs pour illustrer votre rapport
+
+**Résultats à documenter** :
+- Temps d'exécution OLTP vs OLAP
+- Nombre de lignes scannées dans chaque cas
+- Complexité des plans d'exécution
+
+---
+
+### 📋 Exercice 5 : Plan de migration
+
+**Contexte** : Passage de la théorie à la pratique.
+
+**Votre mission** : Détailler le plan de migration en 5 étapes clés :
+
+1. **Extract** : Comment extraire les données depuis l'OLTP ?
+2. **Nettoyer** : Quelles transformations appliquer ?
+3. **Conformer dimensions** : Comment structurer les dimensions ?
+4. **Charger facts** : Comment peupler la table de faits ?
+5. **Publier vues/OLAP** : Comment rendre les données accessibles ?
+
+**Livrable attendu** : Plan d'action avec durée estimée par étape.
+
+---
+
+### 🎯 Critères de réussite
+
+- **Compréhension** : Vous expliquez clairement les problèmes OLTP
+- **Solution** : Vous proposez une architecture OLAP cohérente
+- **Argumentation** : Vous justifiez vos choix techniques
+- **Pratique** : Vous validez par la démonstration dans le notebook
+- **Vision** : Vous proposez un plan de migration réaliste
 
 ## Déroulé (1h30)
 
