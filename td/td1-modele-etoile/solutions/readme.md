@@ -77,33 +77,33 @@ erDiagram
   DIM_MAGASIN ||--o{ FACT_VENTE : magasin_sk
 
   DIM_DATE {
-    date_id INT PK
-    date_cal DATE
-    annee INT
-    mois INT
-    jour INT
-    trimestre INT
+    int date_id PK
+    date date_cal
+    int annee
+    int mois
+    int jour
+    int trimestre
   }
   DIM_PRODUIT {
-    produit_sk INT PK
-    produit_id STRING UNIQUE
-    produit_nom STRING
-    categorie STRING
+    int produit_sk PK
+    string produit_id UK
+    string produit_nom
+    string categorie
   }
   DIM_MAGASIN {
-    magasin_sk INT PK
-    magasin_id STRING UNIQUE
-    ville STRING
-    region STRING
+    int magasin_sk PK
+    string magasin_id UK
+    string ville
+    string region
   }
   FACT_VENTE {
-    fact_sk INT PK
-    date_id INT FK
-    produit_sk INT FK
-    magasin_sk INT FK
-    montant DECIMAL
-    quantite INT
-    stock_eod DECIMAL
+    int fact_sk PK
+    int date_id FK
+    int produit_sk FK
+    int magasin_sk FK
+    decimal montant
+    int quantite
+    decimal stock_eod
   }
 ```
 
