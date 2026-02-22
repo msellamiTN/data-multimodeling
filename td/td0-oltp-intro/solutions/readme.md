@@ -14,6 +14,7 @@ erDiagram
   CLIENT ||--o{ COMMANDE : client_id
   PRODUIT ||--o{ LIGNE_COMMANDE : produit_id
   COMMANDE ||--|{ LIGNE_COMMANDE : commande_id
+  PRODUIT ||--|| STOCKS : produit_id
 
   CLIENT {
     int client_id PK
@@ -38,6 +39,11 @@ erDiagram
     int produit_id FK
     int quantite
     float prix_reel
+  }
+  STOCKS {
+    int produit_id PK
+    int stock_disponible
+    int seuil_alerte
   }
 ```
 

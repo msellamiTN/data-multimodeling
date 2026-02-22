@@ -103,6 +103,7 @@ erDiagram
     magasin_sk INT FK
     montant DECIMAL
     quantite INT
+    stock_eod DECIMAL
   }
 ```
 
