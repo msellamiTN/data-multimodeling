@@ -41,6 +41,12 @@
 | 1002 | 11 | 1 | 800.0 |
 | 1003 | 12 | 1 | 150.0 |
 
+| produit_id | stock_disponible | seuil_alerte |
+| --- | --- | --- |
+| 10 | 15 | 5 |
+| 11 | 8 | 3 |
+| 12 | 25 | 10 |
+
 ## Travail demandé
 
 1. **Modèle OLTP** : dessiner le schéma relationnel actuel (tables commandes, clients, produits) avec PK/FK.
@@ -69,6 +75,18 @@
   SELECT nom, ville, segment
   FROM clients
   WHERE client_id = 1;
+  ```
+
+- **Stock par produit** (opérationnel) :
+
+  ```sql
+  SELECT p.nom, 
+         s.stock_disponible, 
+         s.seuil_alerte,
+         CASE WHEN s.stock_disponible <= s.seuil_alerte THEN 'ALERT' ELSE 'OK' END as statut_stock
+  FROM produits p
+  JOIN stocks s ON p.produit_id = s.produit_id
+  ORDER BY s.stock_disponible ASC;
   ```
 
 - **Total d'une commande** (somme lignes) :

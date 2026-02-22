@@ -60,11 +60,11 @@ Dataset fourni (échantillon) : `fact_ventes`, `dim_date`, `dim_produit`, `dim_m
 
 ```mermaid
 flowchart LR
-  A[Cube Ventes] --> B[Roll-up]
-  A --> C[Drill-down]
-  A --> D[Slice]
-  A --> E[Dice]
-  A --> F[Pivot]
+  A[Cube Ventes] --> B[Roll-up vers mois]
+  A --> C[Drill-down vers jour]
+  A --> D[Slice par région]
+  A --> E[Dice par produit]
+  A --> F[Pivot par temps]
 ```
 
 ## Pour aller plus loin

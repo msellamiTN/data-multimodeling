@@ -122,6 +122,7 @@ erDiagram
     magasin_id INT FK
     montant DECIMAL
     quantite INT
+    stock_eod INT
   }
 ```
 
